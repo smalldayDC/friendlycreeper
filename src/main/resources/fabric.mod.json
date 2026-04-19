@@ -8,7 +8,7 @@
   "contact": {
     "homepage": "https://modrinth.com/mod/friendcreeper",
     "sources": "https://github.com/smalldayDC/friendlycreeper",
-    "issues" : "https://github.com/smalldayDC/friendlycreeper/issues"
+    "issues": "https://github.com/smalldayDC/friendlycreeper/issues"
   },
   "license": "MIT",
   "icon": "icon.png",
@@ -17,10 +17,10 @@
     "main": ["com.smalldaydc.friendlycreeper.FriendlyCreeperMod"],
     "client": ["com.smalldaydc.friendlycreeper.client.FriendlyCreeperClient"]
   },
-   "custom" : {
-    "modmenu" : {
-      "links" : {
-        "modmenu.curseforge" : "https://www.curseforge.com/minecraft/mc-mods/friend-creeper"
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/friend-creeper"
       }
     }
   },
