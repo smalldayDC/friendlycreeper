@@ -6,7 +6,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 
 import java.util.UUID;
 
@@ -44,8 +43,7 @@ public class FriendlyCreeperMod implements ModInitializer {
             PlayerEntity attackerPlayer = attacker instanceof PlayerEntity ap ? ap : null;
             if (attackerPlayer != null && (attackerPlayer.isCreative() || owner.isTeammate(attackerPlayer))) return;
 
-            Vec3d pos = owner.getPos();
-            Box searchBox = Box.of(pos, SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
+            Box searchBox = Box.of(owner.getPos(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
             UUID attackerUUID = attackerPlayer != null ? attackerPlayer.getUuid() : null;
             owner.getWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
                 ITamedCreeper tc = (ITamedCreeper) c;

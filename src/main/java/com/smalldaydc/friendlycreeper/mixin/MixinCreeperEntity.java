@@ -43,11 +43,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private static final TrackedData<Boolean> FRIENDLYCREEPER_SITTING =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+    @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
+
     @Unique private @Nullable UUID friendlycreeper$ownerUUID = null;
     @Unique private @Nullable UUID friendlycreeper$avengeTargetUUID = null;
     @Unique private int friendlycreeper$tameAttempts = 0;
-    @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
-
     @Unique private int friendlycreeper$hurtSoundCooldown = 0;
 
     protected MixinCreeperEntity(EntityType<? extends HostileEntity> entityType, World world) {

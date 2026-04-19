@@ -17,6 +17,12 @@ public class FriendlyCreeperNoConfigScreen extends Screen {
         this.parent = parent;
     }
 
+    private static final String[] MESSAGES = {
+        "Cloth Config API is not installed",
+        "Please install it before configuring via the graphical interface.",
+        "You can download it from Modrinth or CurseForge."
+    };
+
     @Override
     protected void init() {
         this.addDrawableChild(ButtonWidget.builder(
@@ -30,15 +36,9 @@ public class FriendlyCreeperNoConfigScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
-        String[] lines = {
-            "Cloth Config API is not installed",
-            "Please install it before configuring via the graphical interface.",
-            "You can download it from Modrinth or CurseForge."
-        };
-
-        for (int i = 0; i < lines.length; i++) {
+        for (int i = 0; i < MESSAGES.length; i++) {
             context.drawCenteredTextWithShadow(this.textRenderer,
-                    Text.literal(lines[i]),
+                    Text.literal(MESSAGES[i]),
                     this.width / 2, this.height / 2 - 20 + i * 15, 0xFFFFFF);
         }
     }
