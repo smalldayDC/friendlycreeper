@@ -17,7 +17,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -189,24 +188,20 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         nbt.putBoolean(FriendlyCreeperMod.NBT_SITTING,  friendlycreeper$isSitting());
         nbt.putInt(    FriendlyCreeperMod.NBT_ATTEMPTS, friendlycreeper$tameAttempts);
         if (friendlycreeper$ownerUUID != null) {
-            nbt.put(FriendlyCreeperMod.NBT_OWNER, NbtHelper.fromUuid(friendlycreeper$ownerUUID));
+            nbt.putUuid(FriendlyCreeperMod.NBT_OWNER, friendlycreeper$ownerUUID);
         }
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void friendlycreeper$readNbt(NbtCompound nbt, CallbackInfo ci) {
-        if (nbt.getBoolean(FriendlyCreeperMod.NBT_TAMED)) {
-            this.dataTracker.set(FRIENDLYCREEPER_TAMED, true);
-        }
+        this.dataTracker.set(FRIENDLYCREEPER_TAMED, nbt.getBoolean(FriendlyCreeperMod.NBT_TAMED));
         if (nbt.getBoolean(FriendlyCreeperMod.NBT_SITTING)) {
             this.dataTracker.set(FRIENDLYCREEPER_SITTING, true);
             this.setPose(EntityPose.CROUCHING);
         }
         friendlycreeper$tameAttempts = nbt.getInt(FriendlyCreeperMod.NBT_ATTEMPTS);
-        if (nbt.contains(FriendlyCreeperMod.NBT_OWNER)) {
-            try {
-                friendlycreeper$ownerUUID = NbtHelper.toUuid(nbt.get(FriendlyCreeperMod.NBT_OWNER));
-            } catch (Exception ignored) {}
+        if (nbt.containsUuid(FriendlyCreeperMod.NBT_OWNER)) {
+            friendlycreeper$ownerUUID = nbt.getUuid(FriendlyCreeperMod.NBT_OWNER);
         }
     }
 }

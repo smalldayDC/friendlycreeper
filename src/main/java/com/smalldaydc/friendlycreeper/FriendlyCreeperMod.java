@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.UUID;
 
@@ -15,9 +16,13 @@ public class FriendlyCreeperMod implements ModInitializer {
     public static final String NBT_SITTING  = "FriendlySitting";
     public static final String NBT_ATTEMPTS = "FriendlyTameAttempts";
 
+    private static final double SEARCH_RADIUS = 64;
+    private static final double SEARCH_HEIGHT = 32;
+
     @Override
     public void onInitialize() {
         FriendlyCreeperConfig.load();
+
         // Cancel damage from owner (covers melee + projectiles)
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if (!(entity instanceof CreeperEntity creeper)) return true;
@@ -36,10 +41,12 @@ public class FriendlyCreeperMod implements ModInitializer {
             if (damage <= 0) return;
             LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
             if (attacker == null || attacker == owner) return;
-            if (attacker instanceof PlayerEntity ap && ap.isCreative()) return;
-            if (attacker instanceof PlayerEntity ap && owner.isTeammate(ap)) return;
+            PlayerEntity attackerPlayer = attacker instanceof PlayerEntity ap ? ap : null;
+            if (attackerPlayer != null && (attackerPlayer.isCreative() || owner.isTeammate(attackerPlayer))) return;
 
-            Box searchBox = Box.of(owner.getPos(), 64, 32, 64);
+            Vec3d pos = owner.getPos();
+            Box searchBox = Box.of(pos, SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
+            UUID attackerUUID = attackerPlayer != null ? attackerPlayer.getUuid() : null;
             owner.getWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
                 ITamedCreeper tc = (ITamedCreeper) c;
                 return tc.friendlycreeper$isTamed()
@@ -47,8 +54,7 @@ public class FriendlyCreeperMod implements ModInitializer {
                         && !tc.friendlycreeper$isSitting();
             }).forEach(c -> {
                 ITamedCreeper tc = (ITamedCreeper) c;
-                tc.friendlycreeper$setAvengeTargetUUID(
-                        attacker instanceof PlayerEntity ap ? ap.getUuid() : null);
+                tc.friendlycreeper$setAvengeTargetUUID(attackerUUID);
                 c.setTarget(attacker);
             });
         });
@@ -56,8 +62,8 @@ public class FriendlyCreeperMod implements ModInitializer {
         // Clear avenge target when that player dies
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             if (!(entity instanceof PlayerEntity dead)) return;
-            entity.getWorld().getEntitiesByClass(CreeperEntity.class,
-                    Box.of(entity.getPos(), 64, 32, 64), c -> {
+            Box searchBox = Box.of(entity.getPos(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
+            entity.getWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
                 ITamedCreeper tc = (ITamedCreeper) c;
                 UUID av = tc.friendlycreeper$getAvengeTargetUUID();
                 return av != null && av.equals(dead.getUuid());

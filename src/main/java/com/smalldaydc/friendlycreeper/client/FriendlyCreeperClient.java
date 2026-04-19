@@ -33,7 +33,7 @@ public class FriendlyCreeperClient implements ClientModInitializer, ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         if (FabricLoader.getInstance().isModLoaded("cloth-config")) {
-            return parent -> FriendlyCreeperConfigScreen.create(parent);
+            return FriendlyCreeperConfigScreen::create;
         } else {
             return FriendlyCreeperNoConfigScreen::new;
         }
