@@ -7,6 +7,7 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
 import net.minecraft.entity.mob.CreeperEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Environment(EnvType.CLIENT)
 @Mixin(CreeperEntityModel.class)
 public class MixinCreeperEntityModel {
+
+    @Shadow private ModelPart head;
 
     // Known from Minecraft 1.21.1 CreeperEntityModel source
     // HEAD_AND_BODY_Y_PIVOT = 6
@@ -30,7 +33,6 @@ public class MixinCreeperEntityModel {
                                                float headPitch, CallbackInfo ci) {
 
         CreeperEntityModelAccessor acc = (CreeperEntityModelAccessor)(Object) this;
-        ModelPart head       = acc.friendlycreeper$getHead();
         ModelPart leftFront  = acc.friendlycreeper$getLeftFrontLeg();
         ModelPart rightFront = acc.friendlycreeper$getRightFrontLeg();
         ModelPart leftHind   = acc.friendlycreeper$getLeftHindLeg();
