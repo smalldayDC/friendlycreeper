@@ -13,6 +13,8 @@ public class CreeperFollowOwnerGoal extends Goal {
     private static final double FOLLOW_START_DISTANCE = 10.0;
     private static final double FOLLOW_STOP_DISTANCE  = 3.0;
     private static final double MOVE_SPEED            = 1.0;
+    private static final double START_SQ = FOLLOW_START_DISTANCE * FOLLOW_START_DISTANCE;
+    private static final double STOP_SQ  = FOLLOW_STOP_DISTANCE  * FOLLOW_STOP_DISTANCE;
 
     private final CreeperEntity creeper;
     private PlayerEntity owner;
@@ -40,7 +42,7 @@ public class CreeperFollowOwnerGoal extends Goal {
         owner = creeper.getWorld().getPlayerByUuid(ownerUUID);
         if (owner == null || owner.isDead()) return false;
 
-        return creeper.squaredDistanceTo(owner) > FOLLOW_START_DISTANCE * FOLLOW_START_DISTANCE;
+        return creeper.squaredDistanceTo(owner) > START_SQ;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class CreeperFollowOwnerGoal extends Goal {
         if (!asTamed().friendlycreeper$isTamed()) return false;
         // Stop following if a target appears
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
-        return creeper.squaredDistanceTo(owner) > FOLLOW_STOP_DISTANCE * FOLLOW_STOP_DISTANCE;
+        return creeper.squaredDistanceTo(owner) > STOP_SQ;
     }
 
     @Override

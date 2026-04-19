@@ -138,15 +138,13 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             return;
         }
 
-        // Tamed below
-        ITamedCreeper tc = this;
         LivingEntity target = this.getTarget();
         LivingEntity recentDamager = this.getAttacker();
 
         // Self-defense: if attacked by a non-player mob, target it back
         if (recentDamager != null
                 && !(recentDamager instanceof PlayerEntity)
-                && !tc.friendlycreeper$isSitting()
+                && !friendlycreeper$isSitting()
                 && target == null) {
             this.setTarget(recentDamager);
         }
@@ -159,7 +157,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
                 // Too far — stop moving but keep target alive
                 this.getNavigation().stop();
             }
-            // If within range, vanilla MeleeAttackGoal handles movement automatically
         }
 
         // Ghost-explode guard: if no valid target but fuse is counting, stop

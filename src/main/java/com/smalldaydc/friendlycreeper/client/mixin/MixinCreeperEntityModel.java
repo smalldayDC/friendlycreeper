@@ -19,10 +19,6 @@ public class MixinCreeperEntityModel {
 
     @Shadow private ModelPart head;
 
-    // Known from Minecraft 1.21.1 CreeperEntityModel source
-    // HEAD_AND_BODY_Y_PIVOT = 6
-    // head pivot = (0, 6, 0)
-    // legs pivot = (±2, 18, ±4) — 6 + 12 (body height)
     @Unique private static final float DEF_HEAD_Y = 6f;
     @Unique private static final float DEF_LEG_Y  = 18f;
 

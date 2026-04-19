@@ -16,7 +16,6 @@ public class MixinCreeperIgniteGoal {
 
     @Shadow private CreeperEntity creeper;
 
-    // Allow ignition when tamed creeper is close to a valid threat target
     @Inject(method = "canStart", at = @At("RETURN"), cancellable = true)
     private void friendlycreeper$canStart(CallbackInfoReturnable<Boolean> cir) {
         ITamedCreeper tc = (ITamedCreeper)(Object) creeper;

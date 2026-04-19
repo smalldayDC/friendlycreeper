@@ -18,15 +18,11 @@ public class FriendlyCreeperConfig {
 
     private static FriendlyCreeperConfig instance;
 
-    // ── Config fields ──────────────────────────────────────────────────────────
-
     /** Whether the owner can damage their own tamed Creeper. Default: false */
     public boolean allowOwnerDamage = false;
 
     /** Whether tamed Creepers play a hurt sound when at low health. Default: true */
     public boolean hurtSound = true;
-
-    // ── Load / Save ────────────────────────────────────────────────────────────
 
     public static FriendlyCreeperConfig get() {
         if (instance == null) load();
@@ -43,7 +39,6 @@ public class FriendlyCreeperConfig {
         } else {
             instance = new FriendlyCreeperConfig();
         }
-        // Always save to create file if missing or add new fields
         save();
     }
 

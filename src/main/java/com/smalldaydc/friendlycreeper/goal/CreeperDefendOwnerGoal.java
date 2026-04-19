@@ -8,25 +8,20 @@ import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.EnumSet;
 
-/**
- * Keeps the creeper's current non-player target alive so vanilla
- * MeleeAttackGoal + CreeperIgniteGoal can do their jobs.
- * Only holds TARGET control — MOVE is left free for CreeperIgniteGoal.
- */
 public class CreeperDefendOwnerGoal extends Goal {
 
     private final CreeperEntity creeper;
 
     public CreeperDefendOwnerGoal(CreeperEntity creeper) {
         this.creeper = creeper;
-        // Only TARGET — never block MOVE so CreeperIgniteGoal can run
         this.setControls(EnumSet.of(Control.TARGET));
     }
 
     @Override
     public boolean canStart() {
-        if (!((ITamedCreeper)(Object)creeper).friendlycreeper$isTamed()) return false;
-        if (((ITamedCreeper)(Object)creeper).friendlycreeper$isSitting()) return false;
+        ITamedCreeper tc = (ITamedCreeper)(Object) creeper;
+        if (!tc.friendlycreeper$isTamed()) return false;
+        if (tc.friendlycreeper$isSitting()) return false;
         LivingEntity target = creeper.getTarget();
         return target != null && !(target instanceof PlayerEntity) && !target.isDead();
     }

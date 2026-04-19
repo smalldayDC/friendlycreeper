@@ -25,7 +25,7 @@ public class CreeperPoppyFeature extends FeatureRenderer<CreeperEntity, CreeperE
     // head.pivotY = 6px (standing), head cube height = 8px → head top = (6-8)/16 = -0.125f
     // sitting adds +2f to head.pivotY → (8-8)/16 = 0f
     private static final float HEAD_TOP_STANDING = (6f - 8f) / 16.0f;
-    private static final float HEAD_TOP_SITTING  = (8f - 8f) / 16.0f;
+    private static final float HEAD_TOP_SITTING  = 0f;
 
     private final ItemRenderer itemRenderer;
 

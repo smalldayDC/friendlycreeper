@@ -35,6 +35,6 @@
     "minecraft": "1.21.1"
   },
   "suggests": {
-    "cloth-config": "*"
+    "cloth-config": ">=15.0.140"
   }
 }
