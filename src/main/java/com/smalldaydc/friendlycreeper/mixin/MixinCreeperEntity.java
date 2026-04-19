@@ -1,5 +1,6 @@
 package com.smalldaydc.friendlycreeper.mixin;
 
+import com.smalldaydc.friendlycreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendlycreeper.FriendlyCreeperMod;
 import com.smalldaydc.friendlycreeper.ITamedCreeper;
 import com.smalldaydc.friendlycreeper.goal.CreeperDefendOwnerGoal;
@@ -176,7 +177,8 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         // Low health hurt sound (throttled)
         if (friendlycreeper$hurtSoundCooldown > 0) {
             friendlycreeper$hurtSoundCooldown--;
-        } else if (this.getHealth() / this.getMaxHealth() < 0.25f) {
+        } else if (FriendlyCreeperConfig.get().hurtSound
+                && this.getHealth() / this.getMaxHealth() < 0.25f) {
             if (this.getRandom().nextInt(300) == 0) {
                 this.playSound(SoundEvents.ENTITY_CREEPER_HURT, 0.8f,
                         0.9f + this.getRandom().nextFloat() * 0.2f);

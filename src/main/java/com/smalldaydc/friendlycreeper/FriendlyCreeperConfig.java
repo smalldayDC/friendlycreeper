@@ -1,0 +1,57 @@
+package com.smalldaydc.friendlycreeper;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import net.fabricmc.loader.api.FabricLoader;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public class FriendlyCreeperConfig {
+
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final Path CONFIG_PATH = FabricLoader.getInstance()
+            .getConfigDir().resolve("friendlycreeper.json");
+
+    private static FriendlyCreeperConfig instance;
+
+    // ── Config fields ──────────────────────────────────────────────────────────
+
+    /** Whether the owner can damage their own tamed Creeper. Default: false */
+    public boolean allowOwnerDamage = false;
+
+    /** Whether tamed Creepers play a hurt sound when at low health. Default: true */
+    public boolean hurtSound = true;
+
+    // ── Load / Save ────────────────────────────────────────────────────────────
+
+    public static FriendlyCreeperConfig get() {
+        if (instance == null) load();
+        return instance;
+    }
+
+    public static void load() {
+        if (Files.exists(CONFIG_PATH)) {
+            try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
+                instance = GSON.fromJson(reader, FriendlyCreeperConfig.class);
+            } catch (IOException e) {
+                instance = new FriendlyCreeperConfig();
+            }
+        } else {
+            instance = new FriendlyCreeperConfig();
+        }
+        // Always save to create file if missing or add new fields
+        save();
+    }
+
+    public static void save() {
+        try (Writer writer = Files.newBufferedWriter(CONFIG_PATH)) {
+            GSON.toJson(instance, writer);
+        } catch (IOException e) {
+            // ignore
+        }
+    }
+}

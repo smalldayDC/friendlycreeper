@@ -18,6 +18,7 @@ public class FriendlyCreeperMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        FriendlyCreeperConfig.load();
         // Cancel damage from owner (covers melee + projectiles)
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if (!(entity instanceof CreeperEntity creeper)) return true;
@@ -25,6 +26,8 @@ public class FriendlyCreeperMod implements ModInitializer {
             if (!tc.friendlycreeper$isTamed()) return true;
             LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
             if (!(attacker instanceof PlayerEntity player)) return true;
+            // Check config: if allowOwnerDamage is true, owner can hurt their creeper
+            if (FriendlyCreeperConfig.get().allowOwnerDamage) return true;
             UUID ownerUUID = tc.friendlycreeper$getOwnerUUID();
             return ownerUUID == null || !ownerUUID.equals(player.getUuid());
         });
