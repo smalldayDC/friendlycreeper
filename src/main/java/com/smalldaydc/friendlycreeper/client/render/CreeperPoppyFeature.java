@@ -1,17 +1,14 @@
 package com.smalldaydc.friendlycreeper.client.render;
 
 import com.smalldaydc.friendlycreeper.ITamedCreeper;
-import com.smalldaydc.friendlycreeper.client.mixin.CreeperEntityModelAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -22,15 +19,21 @@ import net.minecraft.util.math.RotationAxis;
 @Environment(EnvType.CLIENT)
 public class CreeperPoppyFeature extends FeatureRenderer<CreeperEntity, CreeperEntityModel<CreeperEntity>> {
 
+    // Cached once — no need to create every frame
+    private static final ItemStack POPPY_STACK = new ItemStack(Items.POPPY);
+
+    // head.pivotY = 6px (standing), head cube height = 8px → head top = (6-8)/16 = -0.125f
+    // sitting adds +2f to head.pivotY → (8-8)/16 = 0f
+    private static final float HEAD_TOP_STANDING = (6f - 8f) / 16.0f;
+    private static final float HEAD_TOP_SITTING  = (8f - 8f) / 16.0f;
+
     private final ItemRenderer itemRenderer;
-    private final FeatureRendererContext<CreeperEntity, CreeperEntityModel<CreeperEntity>> ctx;
 
     public CreeperPoppyFeature(
             FeatureRendererContext<CreeperEntity, CreeperEntityModel<CreeperEntity>> context,
             ItemRenderer itemRenderer) {
         super(context);
         this.itemRenderer = itemRenderer;
-        this.ctx = context;
     }
 
     @Override
@@ -40,34 +43,20 @@ public class CreeperPoppyFeature extends FeatureRenderer<CreeperEntity, CreeperE
                        float tickDelta, float animationProgress,
                        float headYaw, float headPitch) {
 
-        if (!((ITamedCreeper)(Object) entity).friendlycreeper$isTamed()) return;
+        ITamedCreeper tc = (ITamedCreeper)(Object) entity;
+        if (!tc.friendlycreeper$isTamed()) return;
 
-        // Get head ModelPart for its current pivotY (changes when sitting)
-        CreeperEntityModelAccessor acc = (CreeperEntityModelAccessor) ctx.getModel();
-        ModelPart head = acc.friendlycreeper$getHead();
-
-        ItemStack poppy = new ItemStack(Items.POPPY);
-        BakedModel model = itemRenderer.getModel(poppy, entity.getWorld(), null, entity.getId());
+        float headTopY = tc.friendlycreeper$isSitting() ? HEAD_TOP_SITTING : HEAD_TOP_STANDING;
 
         matrices.push();
-
-        // In feature renderer space: Y=0 is entity top (after -1 scale), positive Y goes toward feet
-        // head.pivotY is in model pixels; divide by 16 to get blocks
-        // Head cube is 8px tall; pivot at bottom of head.
-        // headTopY is negative (above entity center in model space)
-        float headTopY = (head.pivotY - 8f) / 16.0f;
-
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(
-                (float) Math.toRadians(-headYaw)));
-
-        // Negative Y = upward in this coordinate system
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotation((float) Math.toRadians(-headYaw)));
         matrices.translate(0.0, headTopY - 0.08, 0.0);
-        // Flip 180° so flower faces up instead of down
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180f));
         matrices.scale(0.5f, 0.5f, 0.5f);
 
-        itemRenderer.renderItem(poppy, ModelTransformationMode.GROUND, false,
-                matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, model);
+        itemRenderer.renderItem(POPPY_STACK, ModelTransformationMode.GROUND, false,
+                matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV,
+                itemRenderer.getModel(POPPY_STACK, entity.getWorld(), null, entity.getId()));
 
         matrices.pop();
     }

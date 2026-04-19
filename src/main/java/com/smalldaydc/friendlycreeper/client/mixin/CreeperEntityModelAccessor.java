@@ -10,9 +10,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Environment(EnvType.CLIENT)
 @Mixin(CreeperEntityModel.class)
 public interface CreeperEntityModelAccessor {
-    @Accessor("head")         ModelPart friendlycreeper$getHead();
-    @Accessor("leftFrontLeg") ModelPart friendlycreeper$getLeftFrontLeg();
-    @Accessor("rightFrontLeg")ModelPart friendlycreeper$getRightFrontLeg();
-    @Accessor("leftHindLeg")  ModelPart friendlycreeper$getLeftHindLeg();
-    @Accessor("rightHindLeg") ModelPart friendlycreeper$getRightHindLeg();
+    @Accessor("leftFrontLeg")  ModelPart friendlycreeper$getLeftFrontLeg();
+    @Accessor("rightFrontLeg") ModelPart friendlycreeper$getRightFrontLeg();
+    @Accessor("leftHindLeg")   ModelPart friendlycreeper$getLeftHindLeg();
+    @Accessor("rightHindLeg")  ModelPart friendlycreeper$getRightHindLeg();
 }
