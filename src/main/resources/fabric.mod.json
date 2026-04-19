@@ -17,6 +17,13 @@
     "main": ["com.smalldaydc.friendlycreeper.FriendlyCreeperMod"],
     "client": ["com.smalldaydc.friendlycreeper.client.FriendlyCreeperClient"]
   },
+   "custom" : {
+    "modmenu" : {
+      "links" : {
+        "modmenu.curseforge" : "https://www.curseforge.com/minecraft/mc-mods/friend-creeper"
+      }
+    }
+  },
   "mixins": [
     "friendlycreeper.mixins.json",
     "friendlycreeper.client.mixins.json"
