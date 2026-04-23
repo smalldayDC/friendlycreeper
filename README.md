@@ -28,8 +28,8 @@
 - Untamed Creepers **will not explode** while you hold gunpowder nearby.
 ---
 ## Requirements
-- Fabric Loader `>=0.18.6`
-- [Fabric API](https://modrinth.com/mod/fabric-api) `>=0.116.9`
+- Fabric Loader `>=0.19.2`
+- [Fabric API](https://modrinth.com/mod/fabric-api) `>=0.116.11`
 - Minecraft `1.21.1`
 ---
 ## Building from Source
