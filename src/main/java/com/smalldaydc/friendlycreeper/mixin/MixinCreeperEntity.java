@@ -43,9 +43,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private static final TrackedData<Boolean> FRIENDLYCREEPER_SITTING =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
-    @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
+    @Unique
+    private static final TrackedData<java.util.Optional<UUID>> FRIENDLYCREEPER_OWNER =
+            DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 
-    @Unique private @Nullable UUID friendlycreeper$ownerUUID = null;
+    @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
     @Unique private @Nullable UUID friendlycreeper$avengeTargetUUID = null;
     @Unique private int friendlycreeper$tameAttempts = 0;
     @Unique private int friendlycreeper$hurtSoundCooldown = 0;
@@ -80,11 +82,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     }
 
     @Override public @Nullable UUID friendlycreeper$getOwnerUUID() {
-        return friendlycreeper$ownerUUID;
+        return this.dataTracker.get(FRIENDLYCREEPER_OWNER).orElse(null);
     }
 
     @Override public void friendlycreeper$setOwnerUUID(@Nullable UUID uuid) {
-        this.friendlycreeper$ownerUUID = uuid;
+        this.dataTracker.set(FRIENDLYCREEPER_OWNER, java.util.Optional.ofNullable(uuid));
     }
 
     @Override public @Nullable UUID friendlycreeper$getAvengeTargetUUID() {
@@ -109,6 +111,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private void friendlycreeper$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
         builder.add(FRIENDLYCREEPER_TAMED, false);
         builder.add(FRIENDLYCREEPER_SITTING, false);
+        builder.add(FRIENDLYCREEPER_OWNER, java.util.Optional.empty());
     }
 
     // ── Goals ─────────────────────────────────────────────────────────────────
@@ -181,8 +184,9 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         nbt.putBoolean(FriendlyCreeperMod.NBT_TAMED,    friendlycreeper$isTamed());
         nbt.putBoolean(FriendlyCreeperMod.NBT_SITTING,  friendlycreeper$isSitting());
         nbt.putInt(    FriendlyCreeperMod.NBT_ATTEMPTS, friendlycreeper$tameAttempts);
-        if (friendlycreeper$ownerUUID != null) {
-            nbt.putUuid(FriendlyCreeperMod.NBT_OWNER, friendlycreeper$ownerUUID);
+        UUID ownerUUID = friendlycreeper$getOwnerUUID();
+        if (ownerUUID != null) {
+            nbt.putUuid(FriendlyCreeperMod.NBT_OWNER, ownerUUID);
         }
     }
 
@@ -195,7 +199,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
         friendlycreeper$tameAttempts = nbt.getInt(FriendlyCreeperMod.NBT_ATTEMPTS);
         if (nbt.containsUuid(FriendlyCreeperMod.NBT_OWNER)) {
-            friendlycreeper$ownerUUID = nbt.getUuid(FriendlyCreeperMod.NBT_OWNER);
+            friendlycreeper$setOwnerUUID(nbt.getUuid(FriendlyCreeperMod.NBT_OWNER));
         }
     }
 }
