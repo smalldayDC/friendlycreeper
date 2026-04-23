@@ -33,6 +33,8 @@ public class FriendlyCreeperMod implements ModInitializer {
         // Handle all creeper interactions BEFORE item use to prevent usable items from firing
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
             if (!(entity instanceof CreeperEntity creeper)) return ActionResult.PASS;
+            // On client: return PASS so the packet is still sent to the server
+            if (world.isClient()) return ActionResult.PASS;
 
             ITamedCreeper tc = (ITamedCreeper) creeper;
             ItemStack stack = player.getStackInHand(hand);
@@ -43,19 +45,17 @@ public class FriendlyCreeperMod implements ModInitializer {
                 if (!player.getUuid().equals(tc.friendlycreeper$getOwnerUUID())) return ActionResult.PASS;
 
                 if (player.isSneaking()) {
-                    if (!world.isClient()) tc.friendlycreeper$toggleSit();
+                    tc.friendlycreeper$toggleSit();
                 } else if (stack.isOf(Items.GUNPOWDER) && creeper.getHealth() < creeper.getMaxHealth()) {
-                    if (!world.isClient()) {
-                        if (!player.getAbilities().creativeMode) stack.decrement(1);
-                        creeper.heal(4.0f);
-                        if (world instanceof ServerWorld sw) {
-                            sw.spawnParticles(ParticleTypes.HEART,
-                                    creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
-                                    5, 0.4, 0.4, 0.4, 0.05);
-                        }
+                    if (!player.getAbilities().creativeMode) stack.decrement(1);
+                    creeper.heal(4.0f);
+                    if (world instanceof ServerWorld sw) {
+                        sw.spawnParticles(ParticleTypes.HEART,
+                                creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                                5, 0.4, 0.4, 0.4, 0.05);
                     }
                 } else {
-                    if (!world.isClient()) tc.friendlycreeper$toggleSit();
+                    tc.friendlycreeper$toggleSit();
                 }
                 return ActionResult.SUCCESS;
             }
@@ -64,31 +64,29 @@ public class FriendlyCreeperMod implements ModInitializer {
             if (!stack.isOf(Items.GUNPOWDER)) return ActionResult.PASS;
             if (hand == Hand.OFF_HAND && player.getMainHandStack().isOf(Items.GUNPOWDER)) return ActionResult.PASS;
 
-            if (!world.isClient()) {
-                if (!player.getAbilities().creativeMode) stack.decrement(1);
+            if (!player.getAbilities().creativeMode) stack.decrement(1);
 
-                int attempts = tc.friendlycreeper$getTameAttempts() + 1;
-                boolean success = attempts >= 5 || creeper.getRandom().nextInt(3) == 0;
+            int attempts = tc.friendlycreeper$getTameAttempts() + 1;
+            boolean success = attempts >= 5 || creeper.getRandom().nextInt(3) == 0;
 
-                if (success) {
-                    tc.friendlycreeper$setTamed(true);
-                    tc.friendlycreeper$setOwnerUUID(player.getUuid());
-                    tc.friendlycreeper$setTameAttempts(0);
-                    creeper.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.POPPY));
-                    creeper.setEquipmentDropChance(EquipmentSlot.HEAD, 0.0f);
-                    creeper.setPersistent();
-                    if (world instanceof ServerWorld sw) {
-                        sw.spawnParticles(ParticleTypes.HAPPY_VILLAGER,
-                                creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
-                                20, 0.5, 0.5, 0.5, 0.1);
-                    }
-                } else {
-                    tc.friendlycreeper$setTameAttempts(attempts);
-                    if (world instanceof ServerWorld sw) {
-                        sw.spawnParticles(ParticleTypes.SMOKE,
-                                creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
-                                10, 0.3, 0.3, 0.3, 0.05);
-                    }
+            if (success) {
+                tc.friendlycreeper$setTamed(true);
+                tc.friendlycreeper$setOwnerUUID(player.getUuid());
+                tc.friendlycreeper$setTameAttempts(0);
+                creeper.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.POPPY));
+                creeper.setEquipmentDropChance(EquipmentSlot.HEAD, 0.0f);
+                creeper.setPersistent();
+                if (world instanceof ServerWorld sw) {
+                    sw.spawnParticles(ParticleTypes.HAPPY_VILLAGER,
+                            creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                            20, 0.5, 0.5, 0.5, 0.1);
+                }
+            } else {
+                tc.friendlycreeper$setTameAttempts(attempts);
+                if (world instanceof ServerWorld sw) {
+                    sw.spawnParticles(ParticleTypes.SMOKE,
+                            creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                            10, 0.3, 0.3, 0.3, 0.05);
                 }
             }
             return ActionResult.SUCCESS;
