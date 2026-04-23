@@ -43,6 +43,15 @@ public class FriendlyCreeperConfigScreen {
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
+                        Text.literal("Revenge Owner"),
+                        config.revengeOwner)
+                .setDefaultValue(true)
+                .setTooltip(Text.literal("Whether tamed Creepers avenge their owner when attacked."))
+                .setSaveConsumer(value -> config.revengeOwner = value)
+                .build());
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(
                         Text.literal("Hurt Sound"),
                         config.hurtSound)
                 .setDefaultValue(true)

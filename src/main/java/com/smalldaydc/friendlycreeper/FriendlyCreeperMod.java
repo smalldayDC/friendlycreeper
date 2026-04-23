@@ -38,6 +38,7 @@ public class FriendlyCreeperMod implements ModInitializer {
         ServerLivingEntityEvents.AFTER_DAMAGE.register((entity, source, baseDamage, damage, absorbed) -> {
             if (!(entity instanceof PlayerEntity owner)) return;
             if (damage <= 0) return;
+            if (!FriendlyCreeperConfig.get().revengeOwner) return;
             LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
             if (attacker == null || attacker == owner) return;
             PlayerEntity attackerPlayer = attacker instanceof PlayerEntity ap ? ap : null;
