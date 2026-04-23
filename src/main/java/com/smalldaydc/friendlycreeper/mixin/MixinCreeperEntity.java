@@ -161,7 +161,8 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
         if (friendlycreeper$isSitting()) {
             this.getNavigation().stop();
-            this.setVelocity(0, this.getVelocity().y, 0);
+            // Keep negative Y (gravity/falling) but cancel positive Y (jumping)
+            this.setVelocity(0, Math.min(this.getVelocity().y, 0), 0);
             if (getFuseSpeed() > 0) setFuseSpeed(-1);
         }
 

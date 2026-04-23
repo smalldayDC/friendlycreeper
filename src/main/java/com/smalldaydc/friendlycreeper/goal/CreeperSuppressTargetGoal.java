@@ -52,14 +52,22 @@ public class CreeperSuppressTargetGoal extends Goal {
             return;
         }
 
-        // Non-player target (mob attacking owner or creeper itself): always keep
+        // Untamed: only clear target if the targeted player is holding gunpowder
+        if (!asTamed().friendlycreeper$isTamed()) {
+            if (target instanceof PlayerEntity player && isHoldingGunpowder(player)) {
+                creeper.setTarget(null);
+            }
+            return;
+        }
+
+        // Tamed: keep non-player targets (mobs defending owner/self)
         if (!(target instanceof PlayerEntity)) return;
 
-        // Player target: only keep if it's the avenge target
+        // Tamed: only keep avenge target
         UUID avengeUUID = asTamed().friendlycreeper$getAvengeTargetUUID();
         if (avengeUUID != null && avengeUUID.equals(target.getUuid())) return;
 
-        // All other player targets: clear
+        // Tamed: clear all other player targets
         creeper.setTarget(null);
     }
 
