@@ -131,14 +131,20 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         if (this.getWorld().isClient()) return;
 
         if (!friendlycreeper$isTamed()) {
-            // Stop fuse only if the current target is a player holding gunpowder
-            if (getFuseSpeed() > 0) {
-                LivingEntity target = this.getTarget();
-                if (target instanceof PlayerEntity player
-                        && (player.getMainHandStack().isOf(Items.GUNPOWDER)
-                            || player.getOffHandStack().isOf(Items.GUNPOWDER))) {
-                    setFuseSpeed(-1);
-                }
+            LivingEntity target = this.getTarget();
+            LivingEntity recentDamager = this.getAttacker();
+
+            // Retaliate against non-player attackers (bypasses goal system)
+            if (recentDamager != null && !(recentDamager instanceof PlayerEntity) && target == null) {
+                this.setTarget(recentDamager);
+                target = recentDamager;
+            }
+
+            // Stop fuse only if targeting a gunpowder-holding player
+            if (getFuseSpeed() > 0 && target instanceof PlayerEntity player
+                    && (player.getMainHandStack().isOf(Items.GUNPOWDER)
+                        || player.getOffHandStack().isOf(Items.GUNPOWDER))) {
+                setFuseSpeed(-1);
             }
             return;
         }

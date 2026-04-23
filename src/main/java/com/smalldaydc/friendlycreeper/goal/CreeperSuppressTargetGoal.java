@@ -31,12 +31,7 @@ public class CreeperSuppressTargetGoal extends Goal {
         // For untamed creepers: suppress when nearby player holds gunpowder
         if (!creeper.getWorld().isClient()) {
             PlayerEntity nearest = creeper.getWorld().getClosestPlayer(creeper, 16.0);
-            if (nearest != null && isHoldingGunpowder(nearest)) {
-                // Don't suppress if recently attacked by a non-player (allow retaliation)
-                LivingEntity attacker = creeper.getAttacker();
-                if (attacker != null && !(attacker instanceof PlayerEntity)) return false;
-                return true;
-            }
+            if (nearest != null && isHoldingGunpowder(nearest)) return true;
         }
         return false;
     }
