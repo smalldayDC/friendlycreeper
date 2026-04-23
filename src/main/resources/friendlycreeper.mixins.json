@@ -5,8 +5,7 @@
   "mixins": [
     "MixinCreeperEntity",
     "MixinCreeperIgniteGoal",
-    "MixinMobEntity",
-    "MixinPlayerEntity"
+    "MixinMobEntity"
   ],
   "injectors": {
     "defaultRequire": 1

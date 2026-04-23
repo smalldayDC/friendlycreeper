@@ -121,13 +121,12 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         this.targetSelector.add(0, new CreeperSuppressTargetGoal(self));
     }
 
-    // ── Tick: gunpowder fuse + sit lock + hurt sound + fuse reset ────────────
+    // ── Tick ─────────────────────────────────────────────────────────────────
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void friendlycreeper$onTick(CallbackInfo ci) {
         if (this.getWorld().isClient()) return;
 
-        // Untamed: if nearby player holds gunpowder, stop ignition
         if (!friendlycreeper$isTamed()) {
             var nearest = this.getWorld().getClosestPlayer(this, 8.0);
             if (nearest != null
@@ -142,7 +141,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         LivingEntity target = this.getTarget();
         LivingEntity recentDamager = this.getAttacker();
 
-        // Self-defense: if attacked by a non-player mob, target it back
         if (recentDamager != null
                 && !(recentDamager instanceof PlayerEntity)
                 && !friendlycreeper$isSitting()
@@ -150,24 +148,20 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             this.setTarget(recentDamager);
         }
 
-        // Range check: stop chasing if target is too far, but keep the grudge
         if (target != null && !target.isDead() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
             this.getNavigation().stop();
         }
 
-        // Ghost-explode guard: if no valid target but fuse is counting, stop
         if ((target == null || target.isDead()) && getFuseSpeed() > 0) {
             setFuseSpeed(-1);
         }
 
-        // Sitting: stop everything
         if (friendlycreeper$isSitting()) {
             this.getNavigation().stop();
             this.setVelocity(0, this.getVelocity().y, 0);
             if (getFuseSpeed() > 0) setFuseSpeed(-1);
         }
 
-        // Low health hurt sound (throttled)
         if (friendlycreeper$hurtSoundCooldown > 0) {
             friendlycreeper$hurtSoundCooldown--;
         } else if (FriendlyCreeperConfig.get().hurtSound

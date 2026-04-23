@@ -2,9 +2,17 @@ package com.smalldaydc.friendlycreeper;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 
 import java.util.UUID;
@@ -21,6 +29,70 @@ public class FriendlyCreeperMod implements ModInitializer {
     @Override
     public void onInitialize() {
         FriendlyCreeperConfig.load();
+
+        // Handle all creeper interactions BEFORE item use to prevent usable items from firing
+        UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
+            if (!(entity instanceof CreeperEntity creeper)) return ActionResult.PASS;
+
+            ITamedCreeper tc = (ITamedCreeper) creeper;
+            ItemStack stack = player.getStackInHand(hand);
+
+            if (tc.friendlycreeper$isTamed()) {
+                // Only handle main hand to avoid double-firing
+                if (hand != Hand.MAIN_HAND) return ActionResult.SUCCESS;
+                if (!player.getUuid().equals(tc.friendlycreeper$getOwnerUUID())) return ActionResult.PASS;
+
+                if (player.isSneaking()) {
+                    if (!world.isClient()) tc.friendlycreeper$toggleSit();
+                } else if (stack.isOf(Items.GUNPOWDER) && creeper.getHealth() < creeper.getMaxHealth()) {
+                    if (!world.isClient()) {
+                        if (!player.getAbilities().creativeMode) stack.decrement(1);
+                        creeper.heal(4.0f);
+                        if (world instanceof ServerWorld sw) {
+                            sw.spawnParticles(ParticleTypes.HEART,
+                                    creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                                    5, 0.4, 0.4, 0.4, 0.05);
+                        }
+                    }
+                } else {
+                    if (!world.isClient()) tc.friendlycreeper$toggleSit();
+                }
+                return ActionResult.SUCCESS;
+            }
+
+            // Untamed: gunpowder → tame attempt (both hands allowed)
+            if (!stack.isOf(Items.GUNPOWDER)) return ActionResult.PASS;
+            if (hand == Hand.OFF_HAND && player.getMainHandStack().isOf(Items.GUNPOWDER)) return ActionResult.PASS;
+
+            if (!world.isClient()) {
+                if (!player.getAbilities().creativeMode) stack.decrement(1);
+
+                int attempts = tc.friendlycreeper$getTameAttempts() + 1;
+                boolean success = attempts >= 5 || creeper.getRandom().nextInt(3) == 0;
+
+                if (success) {
+                    tc.friendlycreeper$setTamed(true);
+                    tc.friendlycreeper$setOwnerUUID(player.getUuid());
+                    tc.friendlycreeper$setTameAttempts(0);
+                    creeper.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.POPPY));
+                    creeper.setEquipmentDropChance(EquipmentSlot.HEAD, 0.0f);
+                    creeper.setPersistent();
+                    if (world instanceof ServerWorld sw) {
+                        sw.spawnParticles(ParticleTypes.HAPPY_VILLAGER,
+                                creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                                20, 0.5, 0.5, 0.5, 0.1);
+                    }
+                } else {
+                    tc.friendlycreeper$setTameAttempts(attempts);
+                    if (world instanceof ServerWorld sw) {
+                        sw.spawnParticles(ParticleTypes.SMOKE,
+                                creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
+                                10, 0.3, 0.3, 0.3, 0.05);
+                    }
+                }
+            }
+            return ActionResult.SUCCESS;
+        });
 
         // Cancel damage from owner (covers melee + projectiles)
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
