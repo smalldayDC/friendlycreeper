@@ -167,10 +167,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             setFuseSpeed(-1);
         }
 
-        if (friendlycreeper$isSitting()) {
-            if (getFuseSpeed() > 0) setFuseSpeed(-1);
-        }
-
         if (friendlycreeper$hurtSoundCooldown > 0) {
             friendlycreeper$hurtSoundCooldown--;
         } else if (FriendlyCreeperConfig.get().hurtSound
