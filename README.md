@@ -11,13 +11,6 @@
 
 ---
 
-## How to Tame
-1. Hold **gunpowder** in your hand.
-2. Right-click a Creeper.
-3. On success: green particles appear and a **poppy** blooms on its head.
-
----
-
 ## Controls
 | Action | How |
 |---|---|
