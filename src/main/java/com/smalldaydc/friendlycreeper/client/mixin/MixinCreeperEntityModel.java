@@ -48,8 +48,8 @@ public class MixinCreeperEntityModel {
         if (!((ITamedCreeper)(Object) creeper).friendlycreeper$isSitting()) return;
 
         // Sitting pose: head+body sink together, legs fold UP
-        head.pivotY       = DEF_HEAD_Y + 2f;
-        body.pivotY       = DEF_BODY_Y + 2f;
+        head.pivotY       = DEF_HEAD_Y + 1f;
+        body.pivotY       = DEF_BODY_Y + 1f;
         leftFront.pivotY  = DEF_LEG_Y  - 4f;
         rightFront.pivotY = DEF_LEG_Y  - 4f;
         leftHind.pivotY   = DEF_LEG_Y  - 4f;
