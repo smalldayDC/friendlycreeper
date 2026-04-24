@@ -4,6 +4,7 @@ import com.smalldaydc.friendlycreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendlycreeper.FriendlyCreeperMod;
 import com.smalldaydc.friendlycreeper.ITamedCreeper;
 import com.smalldaydc.friendlycreeper.goal.CreeperFollowOwnerGoal;
+import com.smalldaydc.friendlycreeper.goal.CreeperSitGoal;
 import com.smalldaydc.friendlycreeper.goal.CreeperSuppressTargetGoal;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
@@ -119,6 +120,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     @Inject(method = "initGoals", at = @At("TAIL"))
     private void friendlycreeper$initGoals(CallbackInfo ci) {
         CreeperEntity self = (CreeperEntity) (Object) this;
+        this.goalSelector.add(1, new CreeperSitGoal(self));
         this.goalSelector.add(2, new CreeperFollowOwnerGoal(self));
         this.targetSelector.add(0, new CreeperSuppressTargetGoal(self));
     }
@@ -166,9 +168,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         if (friendlycreeper$isSitting()) {
-            this.getNavigation().stop();
-            // Keep negative Y (gravity/falling) but cancel positive Y (jumping)
-            this.setVelocity(0, Math.min(this.getVelocity().y, 0), 0);
             if (getFuseSpeed() > 0) setFuseSpeed(-1);
         }
 
