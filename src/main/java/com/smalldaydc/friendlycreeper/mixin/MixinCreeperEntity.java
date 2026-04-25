@@ -147,6 +147,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
                 this.setTarget(null);
                 setFuseSpeed(-1);
             }
+
+            // Fallback: stop fuse if target is gone
+            if (getFuseSpeed() > 0 && (this.getTarget() == null || this.getTarget().isDead())) {
+                setFuseSpeed(-1);
+            }
             return;
         }
 
