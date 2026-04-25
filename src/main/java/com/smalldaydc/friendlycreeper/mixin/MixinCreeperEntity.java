@@ -140,10 +140,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
                 this.setTarget(recentDamager);
             }
 
-            // Stop fuse only if targeting a gunpowder-holding player
-            if (getFuseSpeed() > 0 && this.getTarget() instanceof PlayerEntity player
+            // Stop fuse and clear target if targeting a gunpowder-holding player
+            if (this.getTarget() instanceof PlayerEntity player
                     && (player.getMainHandStack().isOf(Items.GUNPOWDER)
                         || player.getOffHandStack().isOf(Items.GUNPOWDER))) {
+                this.setTarget(null);
                 setFuseSpeed(-1);
             }
             return;
