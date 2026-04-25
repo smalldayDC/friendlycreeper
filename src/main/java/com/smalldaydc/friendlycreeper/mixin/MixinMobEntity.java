@@ -2,7 +2,6 @@ package com.smalldaydc.friendlycreeper.mixin;
 
 import com.smalldaydc.friendlycreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendlycreeper.ITamedCreeper;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -87,8 +86,6 @@ public class MixinMobEntity {
                 tc.friendlycreeper$setTamed(true);
                 tc.friendlycreeper$setOwnerUUID(player.getUuid());
                 tc.friendlycreeper$setTameAttempts(0);
-                creeper.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.POPPY));
-                creeper.setEquipmentDropChance(EquipmentSlot.HEAD, 0.0f);
                 creeper.setPersistent();
                 if (creeper.getWorld() instanceof ServerWorld sw) {
                     sw.spawnParticles(ParticleTypes.HAPPY_VILLAGER,
