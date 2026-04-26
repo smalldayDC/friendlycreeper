@@ -16,8 +16,10 @@ import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import net.minecraft.util.Uuids;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -44,9 +46,10 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private static final TrackedData<Boolean> FRIENDLYCREEPER_SITTING =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+    // OPTIONAL_UUID removed in 1.21.11; store owner UUID as String instead
     @Unique
-    private static final TrackedData<Optional<UUID>> FRIENDLYCREEPER_OWNER =
-            DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+    private static final TrackedData<String> FRIENDLYCREEPER_OWNER =
+            DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.STRING);
 
     @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
     @Unique private @Nullable UUID friendlycreeper$avengeTargetUUID = null;
@@ -75,7 +78,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         boolean nowSitting = !friendlycreeper$isSitting();
         this.dataTracker.set(FRIENDLYCREEPER_SITTING, nowSitting);
         this.setPose(nowSitting ? EntityPose.CROUCHING : EntityPose.STANDING);
-        if (!this.getWorld().isClient()) {
+        if (!this.getEntityWorld().isClient()) {
             this.setTarget(null);
             this.getNavigation().stop();
             setFuseSpeed(-1);
@@ -83,11 +86,17 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     }
 
     @Override public @Nullable UUID friendlycreeper$getOwnerUUID() {
-        return this.dataTracker.get(FRIENDLYCREEPER_OWNER).orElse(null);
+        String s = this.dataTracker.get(FRIENDLYCREEPER_OWNER);
+        if (s.isEmpty()) return null;
+        try {
+            return UUID.fromString(s);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     @Override public void friendlycreeper$setOwnerUUID(@Nullable UUID uuid) {
-        this.dataTracker.set(FRIENDLYCREEPER_OWNER, Optional.ofNullable(uuid));
+        this.dataTracker.set(FRIENDLYCREEPER_OWNER, uuid == null ? "" : uuid.toString());
     }
 
     @Override public @Nullable UUID friendlycreeper$getAvengeTargetUUID() {
@@ -112,7 +121,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private void friendlycreeper$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
         builder.add(FRIENDLYCREEPER_TAMED, false);
         builder.add(FRIENDLYCREEPER_SITTING, false);
-        builder.add(FRIENDLYCREEPER_OWNER, Optional.empty());
+        builder.add(FRIENDLYCREEPER_OWNER, "");
     }
 
     // ── Goals ─────────────────────────────────────────────────────────────────
@@ -129,7 +138,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void friendlycreeper$onTick(CallbackInfo ci) {
-        if (this.getWorld().isClient()) return;
+        if (this.getEntityWorld().isClient()) return;
 
         if (!friendlycreeper$isTamed()) {
             LivingEntity target = this.getTarget();
@@ -187,27 +196,26 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
     // ── NBT ───────────────────────────────────────────────────────────────────
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-    private void friendlycreeper$writeNbt(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putBoolean(FriendlyCreeperMod.NBT_TAMED,    friendlycreeper$isTamed());
-        nbt.putBoolean(FriendlyCreeperMod.NBT_SITTING,  friendlycreeper$isSitting());
-        nbt.putInt(    FriendlyCreeperMod.NBT_ATTEMPTS, friendlycreeper$tameAttempts);
+    @Inject(method = "writeCustomData", at = @At("TAIL"))
+    private void friendlycreeper$writeNbt(WriteView view, CallbackInfo ci) {
+        view.putBoolean(FriendlyCreeperMod.NBT_TAMED,    friendlycreeper$isTamed());
+        view.putBoolean(FriendlyCreeperMod.NBT_SITTING,  friendlycreeper$isSitting());
+        view.putInt(    FriendlyCreeperMod.NBT_ATTEMPTS, friendlycreeper$tameAttempts);
         UUID ownerUUID = friendlycreeper$getOwnerUUID();
         if (ownerUUID != null) {
-            nbt.putUuid(FriendlyCreeperMod.NBT_OWNER, ownerUUID);
+            view.put(FriendlyCreeperMod.NBT_OWNER, Uuids.INT_STREAM_CODEC, ownerUUID);
         }
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    private void friendlycreeper$readNbt(NbtCompound nbt, CallbackInfo ci) {
-        this.dataTracker.set(FRIENDLYCREEPER_TAMED, nbt.getBoolean(FriendlyCreeperMod.NBT_TAMED));
-        if (nbt.getBoolean(FriendlyCreeperMod.NBT_SITTING)) {
+    @Inject(method = "readCustomData", at = @At("TAIL"))
+    private void friendlycreeper$readNbt(ReadView view, CallbackInfo ci) {
+        this.dataTracker.set(FRIENDLYCREEPER_TAMED, view.getBoolean(FriendlyCreeperMod.NBT_TAMED, false));
+        if (view.getBoolean(FriendlyCreeperMod.NBT_SITTING, false)) {
             this.dataTracker.set(FRIENDLYCREEPER_SITTING, true);
             this.setPose(EntityPose.CROUCHING);
         }
-        friendlycreeper$tameAttempts = nbt.getInt(FriendlyCreeperMod.NBT_ATTEMPTS);
-        if (nbt.containsUuid(FriendlyCreeperMod.NBT_OWNER)) {
-            friendlycreeper$setOwnerUUID(nbt.getUuid(FriendlyCreeperMod.NBT_OWNER));
-        }
+        friendlycreeper$tameAttempts = view.getInt(FriendlyCreeperMod.NBT_ATTEMPTS, 0);
+        Optional<UUID> ownerOpt = view.read(FriendlyCreeperMod.NBT_OWNER, Uuids.INT_STREAM_CODEC);
+        ownerOpt.ifPresent(this::friendlycreeper$setOwnerUUID);
     }
 }

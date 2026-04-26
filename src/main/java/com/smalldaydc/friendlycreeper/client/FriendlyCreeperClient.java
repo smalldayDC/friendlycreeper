@@ -11,8 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.CreeperEntityRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 
@@ -26,19 +25,19 @@ public class FriendlyCreeperClient implements ClientModInitializer {
         // Prevent item use when right-clicking owned tamed Creeper
         UseItemCallback.EVENT.register((player, world, hand) -> {
             MinecraftClient client = MinecraftClient.getInstance();
-            if (client.crosshairTarget == null) return TypedActionResult.pass(ItemStack.EMPTY);
-            if (client.crosshairTarget.getType() != HitResult.Type.ENTITY) return TypedActionResult.pass(ItemStack.EMPTY);
+            if (client.crosshairTarget == null) return ActionResult.PASS;
+            if (client.crosshairTarget.getType() != HitResult.Type.ENTITY) return ActionResult.PASS;
 
             EntityHitResult entityHit = (EntityHitResult) client.crosshairTarget;
-            if (!(entityHit.getEntity() instanceof CreeperEntity creeper)) return TypedActionResult.pass(ItemStack.EMPTY);
+            if (!(entityHit.getEntity() instanceof CreeperEntity creeper)) return ActionResult.PASS;
 
             ITamedCreeper tc = (ITamedCreeper)(Object) creeper;
-            if (!tc.friendlycreeper$isTamed()) return TypedActionResult.pass(ItemStack.EMPTY);
+            if (!tc.friendlycreeper$isTamed()) return ActionResult.PASS;
 
             UUID ownerUUID = tc.friendlycreeper$getOwnerUUID();
-            if (ownerUUID == null || !ownerUUID.equals(player.getUuid())) return TypedActionResult.pass(ItemStack.EMPTY);
+            if (ownerUUID == null || !ownerUUID.equals(player.getUuid())) return ActionResult.PASS;
 
-            return TypedActionResult.fail(player.getStackInHand(hand));
+            return ActionResult.FAIL;
         });
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(
@@ -46,8 +45,7 @@ public class FriendlyCreeperClient implements ClientModInitializer {
                 if (entityType == EntityType.CREEPER && entityRenderer instanceof CreeperEntityRenderer) {
                     registrationHelper.register(
                         new CreeperPoppyFeature(
-                            (CreeperEntityRenderer) entityRenderer,
-                            context.getItemRenderer()
+                            (CreeperEntityRenderer) entityRenderer
                         )
                     );
                 }

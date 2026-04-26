@@ -1,12 +1,11 @@
 package com.smalldaydc.friendlycreeper.client.mixin;
 
-import com.smalldaydc.friendlycreeper.ITamedCreeper;
+import com.smalldaydc.friendlycreeper.client.IFriendlyCreeperRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
-import net.minecraft.client.render.entity.model.SinglePartEntityModel;
-import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,41 +21,38 @@ public class MixinCreeperEntityModel {
     @Unique private static final float DEF_LEG_Y  = 18f;
 
     @Inject(method = "setAngles", at = @At("TAIL"))
-    private void friendlycreeper$applySitPose(net.minecraft.entity.Entity entity,
-                                               float limbAngle, float limbDistance,
-                                               float animationProgress, float headYaw,
-                                               float headPitch, CallbackInfo ci) {
+    private void friendlycreeper$applySitPose(CreeperEntityRenderState state, CallbackInfo ci) {
 
         CreeperEntityModelAccessor acc = (CreeperEntityModelAccessor)(Object) this;
         ModelPart head       = acc.friendlycreeper$getHead();
-        ModelPart body       = ((SinglePartEntityModel<?>)(Object) this).getPart().getChild("body");
+        ModelPart body       = ((net.minecraft.client.model.Model)(Object) this).getRootPart().getChild("body");
         ModelPart leftFront  = acc.friendlycreeper$getLeftFrontLeg();
         ModelPart rightFront = acc.friendlycreeper$getRightFrontLeg();
         ModelPart leftHind   = acc.friendlycreeper$getLeftHindLeg();
         ModelPart rightHind  = acc.friendlycreeper$getRightHindLeg();
 
-        // Always reset pivotY to defaults (model instances are shared)
-        head.pivotY       = DEF_HEAD_Y;
-        body.pivotY       = DEF_BODY_Y;
-        leftFront.pivotY  = DEF_LEG_Y;
-        rightFront.pivotY = DEF_LEG_Y;
-        leftHind.pivotY   = DEF_LEG_Y;
-        rightHind.pivotY  = DEF_LEG_Y;
+        // Always reset originY to defaults (model instances are shared)
+        head.originY       = DEF_HEAD_Y;
+        body.originY       = DEF_BODY_Y;
+        leftFront.originY  = DEF_LEG_Y;
+        rightFront.originY = DEF_LEG_Y;
+        leftHind.originY   = DEF_LEG_Y;
+        rightHind.originY  = DEF_LEG_Y;
         // NOTE: do NOT reset pitch here — vanilla setAngles already set walking animation
 
-        if (!(entity instanceof CreeperEntity creeper)) return;
-        if (!((ITamedCreeper)(Object) creeper).friendlycreeper$isSitting()) return;
+        IFriendlyCreeperRenderState fcState = (IFriendlyCreeperRenderState) state;
+        if (!fcState.friendlycreeper$isSitting()) return;
 
         // Sitting pose: head+body sink together, legs fold UP
-        head.pivotY       = DEF_HEAD_Y + 1f;
-        body.pivotY       = DEF_BODY_Y + 1f;
-        leftFront.pivotY  = DEF_LEG_Y  - 4f;
-        rightFront.pivotY = DEF_LEG_Y  - 4f;
-        leftHind.pivotY   = DEF_LEG_Y  - 4f;
-        rightHind.pivotY  = DEF_LEG_Y  - 4f;
-        leftFront.pitch   = -0.8f;
-        rightFront.pitch  = -0.8f;
-        leftHind.pitch    =  0.8f;
-        rightHind.pitch   =  0.8f;
+        head.originY       = DEF_HEAD_Y + 1f;
+        body.originY       = DEF_BODY_Y + 1f;
+        leftFront.originY  = DEF_LEG_Y  - 4f;
+        rightFront.originY = DEF_LEG_Y  - 4f;
+        leftHind.originY   = DEF_LEG_Y  - 4f;
+        rightHind.originY  = DEF_LEG_Y  - 4f;
+        leftFront.pitch    = -0.8f;
+        rightFront.pitch   = -0.8f;
+        leftHind.pitch     =  0.8f;
+        rightHind.pitch    =  0.8f;
     }
 }

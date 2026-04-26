@@ -38,7 +38,7 @@ public class FriendlyCreeperNoConfigScreen extends Screen {
 
         for (int i = 0; i < MESSAGES.length; i++) {
             context.drawCenteredTextWithShadow(this.textRenderer,
-                    MESSAGES[i], this.width / 2, this.height / 2 - 20 + i * 15, 0xFFFFFF);
+                    MESSAGES[i], this.width / 2, this.height / 2 - 20 + i * 15, 0xFFFFFFFF);
         }
     }
 }

@@ -34,14 +34,14 @@ public class CreeperFollowOwnerGoal extends Goal {
         if (!asTamed().friendlycreeper$isTamed()) return false;
         if (asTamed().friendlycreeper$isSitting()) return false;
         if (!FriendlyCreeperConfig.get().followOwner) return false;
-        if (creeper.getWorld().isClient()) return false;
+        if (creeper.getEntityWorld().isClient()) return false;
         // Don't follow if currently attacking something
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
         UUID ownerUUID = asTamed().friendlycreeper$getOwnerUUID();
         if (ownerUUID == null) return false;
 
-        owner = creeper.getWorld().getPlayerByUuid(ownerUUID);
+        owner = creeper.getEntityWorld().getPlayerByUuid(ownerUUID);
         if (owner == null || owner.isDead()) return false;
 
         return creeper.squaredDistanceTo(owner) > START_SQ;

@@ -44,9 +44,9 @@ public class FriendlyCreeperMod implements ModInitializer {
             PlayerEntity attackerPlayer = attacker instanceof PlayerEntity ap ? ap : null;
             if (attackerPlayer != null && (attackerPlayer.isCreative() || owner.isTeammate(attackerPlayer))) return;
 
-            Box searchBox = Box.of(owner.getPos(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
+            Box searchBox = Box.of(owner.getEntityPos(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
             UUID attackerUUID = attackerPlayer != null ? attackerPlayer.getUuid() : null;
-            owner.getWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
+            owner.getEntityWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
                 ITamedCreeper tc = (ITamedCreeper) c;
                 return tc.friendlycreeper$isTamed()
                         && owner.getUuid().equals(tc.friendlycreeper$getOwnerUUID())
@@ -62,8 +62,8 @@ public class FriendlyCreeperMod implements ModInitializer {
         // Clear avenge target when that player dies
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
             if (!(entity instanceof PlayerEntity dead)) return;
-            Box searchBox = Box.of(entity.getPos(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
-            entity.getWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
+            Box searchBox = Box.of(entity.getEntityPos(), SEARCH_RADIUS, SEARCH_HEIGHT, SEARCH_RADIUS);
+            entity.getEntityWorld().getEntitiesByClass(CreeperEntity.class, searchBox, c -> {
                 ITamedCreeper tc = (ITamedCreeper) c;
                 UUID av = tc.friendlycreeper$getAvengeTargetUUID();
                 return av != null && av.equals(dead.getUuid());

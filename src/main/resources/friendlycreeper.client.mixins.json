@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "CreeperEntityModelAccessor",
-    "MixinCreeperEntityModel"
+    "MixinCreeperEntityModel",
+    "MixinCreeperEntityRenderState",
+    "MixinCreeperEntityRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

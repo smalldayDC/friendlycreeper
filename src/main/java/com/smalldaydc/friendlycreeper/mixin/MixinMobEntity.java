@@ -45,17 +45,17 @@ public class MixinMobEntity {
 
             // Sneak+right-click → toggle sit (not while in vehicle)
             if (player.isSneaking()) {
-                if (!creeper.hasVehicle() && !player.getWorld().isClient()) tc.friendlycreeper$toggleSit();
+                if (!creeper.hasVehicle() && !player.getEntityWorld().isClient()) tc.friendlycreeper$toggleSit();
                 cir.setReturnValue(ActionResult.SUCCESS);
                 return;
             }
 
             // Gunpowder when hurt → heal
             if (stack.isOf(Items.GUNPOWDER) && creeper.getHealth() < creeper.getMaxHealth()) {
-                if (!player.getWorld().isClient()) {
+                if (!player.getEntityWorld().isClient()) {
                     if (!player.getAbilities().creativeMode) stack.decrement(1);
                     creeper.heal(4.0f);
-                    if (creeper.getWorld() instanceof ServerWorld sw) {
+                    if (creeper.getEntityWorld() instanceof ServerWorld sw) {
                         sw.spawnParticles(ParticleTypes.HEART,
                                 creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
                                 5, 0.4, 0.4, 0.4, 0.05);
@@ -66,7 +66,7 @@ public class MixinMobEntity {
             }
 
             // Any other right-click → toggle sit (also prevents usable items from firing, not while in vehicle)
-            if (!creeper.hasVehicle() && !player.getWorld().isClient()) tc.friendlycreeper$toggleSit();
+            if (!creeper.hasVehicle() && !player.getEntityWorld().isClient()) tc.friendlycreeper$toggleSit();
             cir.setReturnValue(ActionResult.SUCCESS);
             return;
         }
@@ -76,7 +76,7 @@ public class MixinMobEntity {
         // If off-hand triggers but main hand also has gunpowder, skip to avoid double-firing
         if (hand == Hand.OFF_HAND && player.getMainHandStack().isOf(Items.GUNPOWDER)) return;
 
-        if (!player.getWorld().isClient()) {
+        if (!player.getEntityWorld().isClient()) {
             if (!player.getAbilities().creativeMode) stack.decrement(1);
 
             int attempts = tc.friendlycreeper$getTameAttempts() + 1;
@@ -87,14 +87,14 @@ public class MixinMobEntity {
                 tc.friendlycreeper$setOwnerUUID(player.getUuid());
                 tc.friendlycreeper$setTameAttempts(0);
                 creeper.setPersistent();
-                if (creeper.getWorld() instanceof ServerWorld sw) {
+                if (creeper.getEntityWorld() instanceof ServerWorld sw) {
                     sw.spawnParticles(ParticleTypes.HAPPY_VILLAGER,
                             creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
                             20, 0.5, 0.5, 0.5, 0.1);
                 }
             } else {
                 tc.friendlycreeper$setTameAttempts(attempts);
-                if (creeper.getWorld() instanceof ServerWorld sw) {
+                if (creeper.getEntityWorld() instanceof ServerWorld sw) {
                     sw.spawnParticles(ParticleTypes.SMOKE,
                             creeper.getX(), creeper.getBodyY(0.5), creeper.getZ(),
                             10, 0.3, 0.3, 0.3, 0.05);

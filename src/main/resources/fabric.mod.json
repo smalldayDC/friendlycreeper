@@ -31,11 +31,11 @@
   ],
   "depends": {
     "fabricloader": ">=0.19.2",
-    "fabric-api": ">=0.116.11",
-    "minecraft": "1.21.1"
+    "fabric-api": ">=0.141.3",
+    "minecraft": "1.21.11"
   },
   "suggests": {
-    "cloth-config": ">=15.0.140",
-    "modmenu": ">=11.0.4"
+    "cloth-config": ">=21.11.153",
+    "modmenu": ">=17.0.0"
   }
 }
