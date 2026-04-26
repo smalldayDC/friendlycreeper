@@ -12,8 +12,8 @@
 ---
 
 ## Requirements
-- Fabric Loader `>=0.19.2`
-- [Fabric API](https://modrinth.com/mod/fabric-api) `>=0.116.11`
+- [Fabric Loader](https://github.com/FabricMC/fabric-loader) `>=0.19.2`
+- [Fabric API](https://github.com/FabricMC/fabric-api) `>=0.116.11`
 - Minecraft `1.21.1`
 
 ---
