@@ -1,0 +1,31 @@
+{
+  "config.friendlycreeper.title": "Friend Creeper 設定",
+  "config.friendlycreeper.category.general": "一般",
+  "config.friendlycreeper.category.client": "クライアント",
+
+  "config.friendlycreeper.allowOwnerDamage": "オーナーのダメージを許可",
+  "config.friendlycreeper.allowOwnerDamage.tooltip": "オーナーが自分の手懐けたクリーパーにダメージを与えられるかどうか。",
+
+  "config.friendlycreeper.followOwner": "オーナーを追従",
+  "config.friendlycreeper.followOwner.tooltip": "手懐けたクリーパーがオーナーを追従するかどうか。",
+
+  "config.friendlycreeper.revengeOwner": "オーナーの仇討ち",
+  "config.friendlycreeper.revengeOwner.tooltip": "オーナーが攻撃されたとき、手懐けたクリーパーが仇を討つかどうか。",
+
+  "config.friendlycreeper.snowGolemAttack": "スノウゴーレムの攻撃",
+  "config.friendlycreeper.snowGolemAttack.tooltip": "スノウゴーレムが手懐けたクリーパーを攻撃できるかどうか。",
+
+  "config.friendlycreeper.hurtSound": "ダメージ音",
+  "config.friendlycreeper.hurtSound.tooltip": "手懐けたクリーパーが低体力時にダメージ音を鳴らすかどうか。",
+
+  "config.friendlycreeper.renderPoppy": "ポピーの描画",
+  "config.friendlycreeper.renderPoppy.tooltip": "手懐けたクリーパーの頭にポピーを描画するかどうか。",
+
+  "config.friendlycreeper.afraidOfCats": "ネコを恐れる",
+  "config.friendlycreeper.afraidOfCats.tooltip": "手懐けたクリーパーがネコやヤマネコを恐れるかどうか。",
+
+  "screen.friendlycreeper.noconfig.line1": "Cloth Config API がインストールされていません",
+  "screen.friendlycreeper.noconfig.line2": "グラフィカルインターフェースで設定するには、先にインストールしてください。",
+  "screen.friendlycreeper.noconfig.line3": "Modrinth または CurseForge からダウンロードできます。",
+  "screen.friendlycreeper.noconfig.back": "戻る"
+}

@@ -1,0 +1,31 @@
+{
+  "config.friendlycreeper.title": "Настройки Friend Creeper",
+  "config.friendlycreeper.category.general": "Общие",
+  "config.friendlycreeper.category.client": "Клиент",
+
+  "config.friendlycreeper.allowOwnerDamage": "Урон от владельца",
+  "config.friendlycreeper.allowOwnerDamage.tooltip": "Может ли владелец наносить урон своему прирученному криперу.",
+
+  "config.friendlycreeper.followOwner": "Следовать за владельцем",
+  "config.friendlycreeper.followOwner.tooltip": "Будет ли прирученный крипер следовать за владельцем.",
+
+  "config.friendlycreeper.revengeOwner": "Месть за владельца",
+  "config.friendlycreeper.revengeOwner.tooltip": "Будет ли прирученный крипер мстить за атакованного владельца.",
+
+  "config.friendlycreeper.snowGolemAttack": "Атака снежного голема",
+  "config.friendlycreeper.snowGolemAttack.tooltip": "Могут ли снежные големы атаковать прирученных криперов.",
+
+  "config.friendlycreeper.hurtSound": "Звук урона",
+  "config.friendlycreeper.hurtSound.tooltip": "Будет ли прирученный крипер издавать звук урона при низком здоровье.",
+
+  "config.friendlycreeper.renderPoppy": "Отображение мака",
+  "config.friendlycreeper.renderPoppy.tooltip": "Отображать ли мак на голове прирученного крипера.",
+
+  "config.friendlycreeper.afraidOfCats": "Боится кошек",
+  "config.friendlycreeper.afraidOfCats.tooltip": "Будет ли прирученный крипер бояться кошек и оцелотов.",
+
+  "screen.friendlycreeper.noconfig.line1": "Cloth Config API не установлен",
+  "screen.friendlycreeper.noconfig.line2": "Установите его перед настройкой через графический интерфейс.",
+  "screen.friendlycreeper.noconfig.line3": "Вы можете скачать его с Modrinth или CurseForge.",
+  "screen.friendlycreeper.noconfig.back": "Назад"
+}

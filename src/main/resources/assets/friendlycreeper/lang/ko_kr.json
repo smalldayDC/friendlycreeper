@@ -1,0 +1,31 @@
+{
+  "config.friendlycreeper.title": "Friend Creeper 설정",
+  "config.friendlycreeper.category.general": "일반",
+  "config.friendlycreeper.category.client": "클라이언트",
+
+  "config.friendlycreeper.allowOwnerDamage": "주인 피해 허용",
+  "config.friendlycreeper.allowOwnerDamage.tooltip": "주인이 자신의 길들인 크리퍼에게 피해를 줄 수 있는지 여부.",
+
+  "config.friendlycreeper.followOwner": "주인 따라가기",
+  "config.friendlycreeper.followOwner.tooltip": "길들인 크리퍼가 주인을 따라가는지 여부.",
+
+  "config.friendlycreeper.revengeOwner": "주인 복수",
+  "config.friendlycreeper.revengeOwner.tooltip": "주인이 공격당했을 때 길들인 크리퍼가 복수하는지 여부.",
+
+  "config.friendlycreeper.snowGolemAttack": "눈 골렘 공격",
+  "config.friendlycreeper.snowGolemAttack.tooltip": "눈 골렘이 길들인 크리퍼를 공격할 수 있는지 여부.",
+
+  "config.friendlycreeper.hurtSound": "피해 소리",
+  "config.friendlycreeper.hurtSound.tooltip": "길들인 크리퍼가 체력이 낮을 때 피해 소리를 재생하는지 여부.",
+
+  "config.friendlycreeper.renderPoppy": "양귀비 렌더링",
+  "config.friendlycreeper.renderPoppy.tooltip": "길들인 크리퍼 머리 위에 양귀비를 렌더링할지 여부.",
+
+  "config.friendlycreeper.afraidOfCats": "고양이를 무서워함",
+  "config.friendlycreeper.afraidOfCats.tooltip": "길들인 크리퍼가 고양이와 오셀롯을 무서워하는지 여부.",
+
+  "screen.friendlycreeper.noconfig.line1": "Cloth Config API가 설치되지 않았습니다",
+  "screen.friendlycreeper.noconfig.line2": "그래픽 인터페이스에서 설정하려면 먼저 설치해 주세요.",
+  "screen.friendlycreeper.noconfig.line3": "Modrinth 또는 CurseForge에서 다운로드할 수 있습니다.",
+  "screen.friendlycreeper.noconfig.back": "뒤로"
+}
