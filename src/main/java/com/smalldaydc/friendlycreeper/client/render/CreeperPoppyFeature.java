@@ -1,5 +1,6 @@
 package com.smalldaydc.friendlycreeper.client.render;
 
+import com.smalldaydc.friendlycreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendlycreeper.client.IFriendlyCreeperRenderState;
 import com.smalldaydc.friendlycreeper.client.mixin.CreeperEntityModelAccessor;
 import net.fabricmc.api.EnvType;
@@ -33,6 +34,7 @@ public class CreeperPoppyFeature extends FeatureRenderer<CreeperEntityRenderStat
 
         IFriendlyCreeperRenderState fcState = (IFriendlyCreeperRenderState) state;
         if (!fcState.friendlycreeper$isTamed()) return;
+        if (!FriendlyCreeperConfig.get().renderPoppy) return;
 
         ItemRenderState poppyState = fcState.friendlycreeper$getPoppyRenderState();
         if (poppyState.isEmpty()) return;

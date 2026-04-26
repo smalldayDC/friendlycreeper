@@ -9,11 +9,14 @@ import com.smalldaydc.friendlycreeper.goal.CreeperSuppressTargetGoal;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
@@ -132,6 +135,23 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         this.goalSelector.add(1, new CreeperSitGoal(self));
         this.goalSelector.add(2, new CreeperFollowOwnerGoal(self));
         this.targetSelector.add(0, new CreeperSuppressTargetGoal(self));
+
+        // Replace vanilla flee goals with conditional ones (respects afraidOfCats config)
+        this.goalSelector.clear(goal -> goal instanceof FleeEntityGoal);
+        this.goalSelector.add(3, new FleeEntityGoal<>(self, OcelotEntity.class, 6.0F, 1.0, 1.2) {
+            @Override
+            public boolean canStart() {
+                if (friendlycreeper$isTamed() && !FriendlyCreeperConfig.get().afraidOfCats) return false;
+                return super.canStart();
+            }
+        });
+        this.goalSelector.add(3, new FleeEntityGoal<>(self, CatEntity.class, 6.0F, 1.0, 1.2) {
+            @Override
+            public boolean canStart() {
+                if (friendlycreeper$isTamed() && !FriendlyCreeperConfig.get().afraidOfCats) return false;
+                return super.canStart();
+            }
+        });
     }
 
     // ── Tick ─────────────────────────────────────────────────────────────────

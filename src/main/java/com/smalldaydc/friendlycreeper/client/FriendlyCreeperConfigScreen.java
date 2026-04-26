@@ -68,6 +68,24 @@ public class FriendlyCreeperConfigScreen {
                 .setSaveConsumer(value -> config.hurtSound = value)
                 .build());
 
+        general.addEntry(entryBuilder
+                .startBooleanToggle(
+                        Text.literal("Render Poppy"),
+                        config.renderPoppy)
+                .setDefaultValue(true)
+                .setTooltip(Text.literal("Whether to render the poppy on tamed Creepers' heads.\nNote: This is a client-side option and is not affected by server configuration."))
+                .setSaveConsumer(value -> config.renderPoppy = value)
+                .build());
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(
+                        Text.literal("Afraid of Cats"),
+                        config.afraidOfCats)
+                .setDefaultValue(true)
+                .setTooltip(Text.literal("Whether tamed Creepers are afraid of cats and ocelots."))
+                .setSaveConsumer(value -> config.afraidOfCats = value)
+                .build());
+
         return builder.build();
     }
 }

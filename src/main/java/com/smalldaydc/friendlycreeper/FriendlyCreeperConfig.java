@@ -33,6 +33,12 @@ public class FriendlyCreeperConfig {
     /** Whether tamed Creepers play a hurt sound when at low health. Default: true */
     public boolean hurtSound = true;
 
+    /** Whether to render the poppy on tamed Creepers' heads. Client-side only. Default: true */
+    public boolean renderPoppy = true;
+
+    /** Whether tamed Creepers are afraid of cats and ocelots. Default: true */
+    public boolean afraidOfCats = true;
+
     public static FriendlyCreeperConfig get() {
         if (instance == null) load();
         return instance;
