@@ -7,8 +7,8 @@
   "authors": ["smalldayDC_"],
   "contact": {
     "homepage": "https://modrinth.com/mod/friendcreeper",
-    "sources": "https://github.com/smalldayDC/friendlycreeper",
-    "issues": "https://github.com/smalldayDC/friendlycreeper/issues"
+    "sources": "https://github.com/smalldayDC/friendcreeper",
+    "issues": "https://github.com/smalldayDC/friendcreeper/issues"
   },
   "license": "MIT",
   "icon": "icon.png",
