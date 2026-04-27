@@ -206,12 +206,13 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         if (recentDamager != null
                 && !(recentDamager instanceof PlayerEntity)
                 && !friendlycreeper$isSitting()
-                && target == null) {
+                && target == null
+                && this.canSee(recentDamager)) {
             this.setTarget(recentDamager);
         }
 
         if (target != null && !target.isDead() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
-            this.getNavigation().stop();
+            this.setTarget(null);
         }
 
         if ((target == null || target.isDead()) && getFuseSpeed() > 0) {
