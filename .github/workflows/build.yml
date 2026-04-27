@@ -42,5 +42,5 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: friendlycreeper-${{ github.sha }}
+          name: friendcreeper-${{ github.sha }}
           path: build/libs/*.jar

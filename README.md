@@ -30,7 +30,7 @@
 ## Building from Source
 ```bash
 git clone https://github.com/smalldayDC/friendcreeper.git
-cd friendlycreeper
+cd friendcreeper
 gradlew build
 ```
 The compiled jar will be in `build/libs/`.

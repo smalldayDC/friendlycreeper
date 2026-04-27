@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.smalldaydc.friendcreeper.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinCreeperEntity",
+    "MixinCreeperIgniteGoal",
+    "MixinMobEntity"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

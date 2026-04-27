@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "friendlycreeper",
+  "id": "friendcreeper",
   "version": "${version}",
   "name": "Friend Creeper",
   "description": "Tame Creepers with gunpowder and make them your friend.",
@@ -14,9 +14,9 @@
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": ["com.smalldaydc.friendlycreeper.FriendlyCreeperMod"],
-    "client": ["com.smalldaydc.friendlycreeper.client.FriendlyCreeperClient"],
-    "modmenu": ["com.smalldaydc.friendlycreeper.client.FriendlyCreeperModMenuEntry"]
+    "main": ["com.smalldaydc.friendcreeper.FriendlyCreeperMod"],
+    "client": ["com.smalldaydc.friendcreeper.client.FriendlyCreeperClient"],
+    "modmenu": ["com.smalldaydc.friendcreeper.client.FriendlyCreeperModMenuEntry"]
   },
   "custom": {
     "modmenu": {
@@ -26,8 +26,8 @@
     }
   },
   "mixins": [
-    "friendlycreeper.mixins.json",
-    "friendlycreeper.client.mixins.json"
+    "friendcreeper.mixins.json",
+    "friendcreeper.client.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.19.2",

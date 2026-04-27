@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.smalldaydc.friendcreeper.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "CreeperEntityModelAccessor",
+    "MixinCreeperEntityModel",
+    "MixinCreeperEntityRenderState",
+    "MixinCreeperEntityRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
