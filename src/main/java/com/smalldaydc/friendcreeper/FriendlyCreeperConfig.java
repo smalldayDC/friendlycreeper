@@ -42,7 +42,7 @@ public class FriendlyCreeperConfig {
     /** Whether tamed Creepers are afraid of cats and ocelots. Default: true */
     public boolean afraidOfCats = true;
 
-    /** Whether tamed Creepers show a wither rose instead of a poppy when at low health. Requires renderPoppy. Default: true */
+    /** Whether tamed Creepers show a wither rose instead of a poppy when at low health. Requires renderPoppy. Client-side only. Default: true */
     public boolean witherRoseOnLowHealth = true;
 
     public static FriendlyCreeperConfig get() {

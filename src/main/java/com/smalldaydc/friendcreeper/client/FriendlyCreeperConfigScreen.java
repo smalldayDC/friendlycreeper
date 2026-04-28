@@ -69,15 +69,6 @@ public class FriendlyCreeperConfigScreen {
                 .setSaveConsumer(value -> config.afraidOfCats = value)
                 .build());
 
-        general.addEntry(entryBuilder
-                .startBooleanToggle(
-                        Text.translatable("config.friendcreeper.witherRoseOnLowHealth"),
-                        config.witherRoseOnLowHealth)
-                .setDefaultValue(true)
-                .setTooltip(Text.translatable("config.friendcreeper.witherRoseOnLowHealth.tooltip"))
-                .setSaveConsumer(value -> config.witherRoseOnLowHealth = value)
-                .build());
-
         client.addEntry(entryBuilder
                 .startBooleanToggle(
                         Text.translatable("config.friendcreeper.hurtSound"),
@@ -94,6 +85,15 @@ public class FriendlyCreeperConfigScreen {
                 .setDefaultValue(true)
                 .setTooltip(Text.translatable("config.friendcreeper.renderPoppy.tooltip"))
                 .setSaveConsumer(value -> config.renderPoppy = value)
+                .build());
+
+        client.addEntry(entryBuilder
+                .startBooleanToggle(
+                        Text.translatable("config.friendcreeper.witherRoseOnLowHealth"),
+                        config.witherRoseOnLowHealth)
+                .setDefaultValue(true)
+                .setTooltip(Text.translatable("config.friendcreeper.witherRoseOnLowHealth.tooltip"))
+                .setSaveConsumer(value -> config.witherRoseOnLowHealth = value)
                 .build());
 
         client.addEntry(entryBuilder
