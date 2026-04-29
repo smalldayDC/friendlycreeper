@@ -49,7 +49,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private static final TrackedData<Boolean> FRIENDCREEPER_SITTING =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
-    // OPTIONAL_UUID removed in 1.21.11; store owner UUID as String instead
     @Unique
     private static final TrackedData<String> FRIENDCREEPER_OWNER =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.STRING);
