@@ -15,7 +15,7 @@
   "config.friendcreeper.renderPoppy": "ポピーの描画",
   "config.friendcreeper.renderPoppy.tooltip": "手懐けたクリーパーの頭にポピーを描画するかどうか。",
   "config.friendcreeper.tamedCreeperTexture": "手懐けたクリーパーの表情",
-  "config.friendcreeper.tamedCreeperTexture.tooltip": "手懐けたクリーパーにカスタム表情を使用するかどうか（健康時は笑顔、低体力時は泣き顔）。",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "手懐けたクリーパーにカスタム表情を使用するかどうか（健康時は笑顔、低体力時は泣き顔）。\nカスタムリソースパックが動作しない場合は、このオプションを無効にしてください。",
   "config.friendcreeper.afraidOfCats": "ネコを恐れる",
   "config.friendcreeper.afraidOfCats.tooltip": "手懐けたクリーパーがネコやヤマネコを恐れるかどうか。",
   "config.friendcreeper.witherRoseOnLowHealth": "低体力時にウィザーローズ",

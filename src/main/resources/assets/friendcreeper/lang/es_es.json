@@ -15,7 +15,7 @@
   "config.friendcreeper.renderPoppy": "Mostrar amapola",
   "config.friendcreeper.renderPoppy.tooltip": "Si se muestra la amapola en la cabeza de los Creepers domesticados.",
   "config.friendcreeper.tamedCreeperTexture": "Cara del Creeper domesticado",
-  "config.friendcreeper.tamedCreeperTexture.tooltip": "Si los Creepers domesticados usan caras personalizadas (cara feliz con mucha vida, triste con poca vida).",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "Si los Creepers domesticados usan caras personalizadas (cara feliz con mucha vida, triste con poca vida).\nSi tu paquete de recursos personalizado no funciona, intenta desactivar esta opción.",
   "config.friendcreeper.afraidOfCats": "Miedo a los gatos",
   "config.friendcreeper.afraidOfCats.tooltip": "Si los Creepers domesticados tienen miedo de los gatos y los ocelotes.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa de Wither con poca vida",

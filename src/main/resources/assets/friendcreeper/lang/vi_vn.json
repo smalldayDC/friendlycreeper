@@ -15,7 +15,7 @@
   "config.friendcreeper.renderPoppy": "Hiển thị hoa anh túc",
   "config.friendcreeper.renderPoppy.tooltip": "Có hiển thị hoa anh túc trên đầu Creeper đã thuần hóa hay không.",
   "config.friendcreeper.tamedCreeperTexture": "Khuôn mặt Creeper đã thuần hóa",
-  "config.friendcreeper.tamedCreeperTexture.tooltip": "Creeper đã thuần hóa có sử dụng khuôn mặt tùy chỉnh hay không (mặt cười khi khỏe mạnh, mặt buồn khi máu thấp).",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "Creeper đã thuần hóa có sử dụng khuôn mặt tùy chỉnh hay không (mặt cười khi khỏe mạnh, mặt buồn khi máu thấp).\nNếu gói tài nguyên tùy chỉnh của bạn không hoạt động, hãy thử tắt tùy chọn này.",
   "config.friendcreeper.afraidOfCats": "Sợ mèo",
   "config.friendcreeper.afraidOfCats.tooltip": "Creeper đã thuần hóa có sợ mèo và mèo rừng hay không.",
   "config.friendcreeper.witherRoseOnLowHealth": "Hoa hồng héo khi máu thấp",

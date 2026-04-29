@@ -15,7 +15,7 @@
   "config.friendcreeper.renderPoppy": "渲染虞美人",
   "config.friendcreeper.renderPoppy.tooltip": "是否渲染驯服苦力怕头上的虞美人。",
   "config.friendcreeper.tamedCreeperTexture": "驯服苦力怕表情",
-  "config.friendcreeper.tamedCreeperTexture.tooltip": "驯服的苦力怕是否使用自定义表情（健康时笑脸，低血量时哭脸）。",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "驯服的苦力怕是否使用自定义表情（健康时笑脸，低血量时哭脸）。\n如果你的自定义资源包失效，请尝试禁用该选项。",
   "config.friendcreeper.afraidOfCats": "害怕猫",
   "config.friendcreeper.afraidOfCats.tooltip": "驯服的苦力怕是否害怕猫和豹猫。",
   "config.friendcreeper.witherRoseOnLowHealth": "低血量时显示凋灵玫瑰",

@@ -15,7 +15,7 @@
   "config.friendcreeper.renderPoppy": "渲染罌粟",
   "config.friendcreeper.renderPoppy.tooltip": "是否渲染馴服苦力怕頭上的罌粟。",
   "config.friendcreeper.tamedCreeperTexture": "馴服苦力怕表情",
-  "config.friendcreeper.tamedCreeperTexture.tooltip": "馴服的苦力怕是否使用自訂表情（健康時笑臉，低血量時哭臉）。",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "馴服的苦力怕是否使用自訂表情（健康時笑臉，低血量時哭臉）。\n如果你的自訂資源包失效，請嘗試停用該選項。",
   "config.friendcreeper.afraidOfCats": "害怕貓",
   "config.friendcreeper.afraidOfCats.tooltip": "馴服的苦力怕是否害怕貓和山貓。",
   "config.friendcreeper.witherRoseOnLowHealth": "低血量時顯示凋零玫瑰",

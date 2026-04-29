@@ -15,7 +15,7 @@
   "config.friendcreeper.renderPoppy": "Tampilkan poppy",
   "config.friendcreeper.renderPoppy.tooltip": "Apakah menampilkan poppy di kepala Creeper jinak.",
   "config.friendcreeper.tamedCreeperTexture": "Wajah Creeper jinak",
-  "config.friendcreeper.tamedCreeperTexture.tooltip": "Apakah Creeper jinak menggunakan wajah kustom (wajah senang saat sehat, wajah sedih saat kesehatan rendah).",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "Apakah Creeper jinak menggunakan wajah kustom (wajah senang saat sehat, wajah sedih saat kesehatan rendah).\nJika paket sumber daya kustom Anda tidak berfungsi, coba nonaktifkan opsi ini.",
   "config.friendcreeper.afraidOfCats": "Takut kucing",
   "config.friendcreeper.afraidOfCats.tooltip": "Apakah Creeper jinak takut terhadap kucing dan ocelot.",
   "config.friendcreeper.witherRoseOnLowHealth": "Mawar Wither saat kesehatan rendah",

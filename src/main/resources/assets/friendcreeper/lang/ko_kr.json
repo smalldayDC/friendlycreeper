@@ -15,7 +15,7 @@
   "config.friendcreeper.renderPoppy": "양귀비 렌더링",
   "config.friendcreeper.renderPoppy.tooltip": "길들인 크리퍼 머리 위에 양귀비를 렌더링할지 여부.",
   "config.friendcreeper.tamedCreeperTexture": "길들인 크리퍼 표정",
-  "config.friendcreeper.tamedCreeperTexture.tooltip": "길들인 크리퍼에 커스텀 표정을 사용할지 여부 (건강할 때 웃는 얼굴, 체력이 낮을 때 우는 얼굴).",
+  "config.friendcreeper.tamedCreeperTexture.tooltip": "길들인 크리퍼에 커스텀 표정을 사용할지 여부 (건강할 때 웃는 얼굴, 체력이 낮을 때 우는 얼굴).\n커스텀 리소스 팩이 작동하지 않으면 이 옵션을 비활성화해 보세요.",
   "config.friendcreeper.afraidOfCats": "고양이를 무서워함",
   "config.friendcreeper.afraidOfCats.tooltip": "길들인 크리퍼가 고양이와 오셀롯을 무서워하는지 여부.",
   "config.friendcreeper.witherRoseOnLowHealth": "낮은 체력 시 위더 장미",
