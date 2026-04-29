@@ -3,6 +3,8 @@ package com.smalldaydc.friendcreeper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -12,6 +14,7 @@ import java.nio.file.Path;
 
 public class FriendlyCreeperConfig {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger("FriendCreeper");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path CONFIG_PATH = FabricLoader.getInstance()
             .getConfigDir().resolve("friendcreeper.json");
@@ -56,6 +59,7 @@ public class FriendlyCreeperConfig {
                 instance = GSON.fromJson(reader, FriendlyCreeperConfig.class);
                 return;
             } catch (Exception e) {
+                LOGGER.warn("Corrupted configuration file detected; reset to default values.");
                 instance = new FriendlyCreeperConfig();
             }
         } else {
