@@ -64,7 +64,7 @@ public class FriendlyCreeperConfig {
                     return;
                 }
             } catch (Exception e) {
-                LOGGER.warn("Failed to load configuration file; reset to default values.", e);
+                LOGGER.warn("Failed to load configuration file; reset to default values.");
                 instance = new FriendlyCreeperConfig();
             }
         } else {
