@@ -57,9 +57,14 @@ public class FriendlyCreeperConfig {
         if (Files.exists(CONFIG_PATH)) {
             try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
                 instance = GSON.fromJson(reader, FriendlyCreeperConfig.class);
-                return;
+                if (instance == null) {
+                    LOGGER.warn("Empty configuration file; reset to default values.");
+                    instance = new FriendlyCreeperConfig();
+                } else {
+                    return;
+                }
             } catch (Exception e) {
-                LOGGER.warn("Corrupted configuration file detected; reset to default values.");
+                LOGGER.warn("Failed to load configuration file; reset to default values.", e);
                 instance = new FriendlyCreeperConfig();
             }
         } else {
@@ -72,7 +77,7 @@ public class FriendlyCreeperConfig {
         try (Writer writer = Files.newBufferedWriter(CONFIG_PATH)) {
             GSON.toJson(instance, writer);
         } catch (IOException e) {
-            // ignore
+            LOGGER.warn("Failed to save configuration file.", e);
         }
     }
 }
