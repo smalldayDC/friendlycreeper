@@ -16,6 +16,8 @@
   "config.friendcreeper.renderPoppy.tooltip": "क्या पालतू क्रीपर के सिर पर पॉपी दिखाना है।",
   "config.friendcreeper.tamedCreeperTexture": "पालतू क्रीपर चेहरा",
   "config.friendcreeper.tamedCreeperTexture.tooltip": "क्या पालतू क्रीपर कस्टम चेहरे का उपयोग करेगा (स्वस्थ होने पर खुश चेहरा, कम स्वास्थ्य पर उदास चेहरा)।\nयदि आपका कस्टम रिसोर्स पैक काम नहीं कर रहा है, तो इस विकल्प को अक्षम करने का प्रयास करें।",
+  "config.friendcreeper.scaredFace": "डरा हुआ चेहरा",
+  "config.friendcreeper.scaredFace.tooltip": "क्या पालतू क्रीपर बिल्लियों से भागते समय डरा हुआ चेहरा दिखाएगा।\nपालतू क्रीपर चेहरा सक्षम होना चाहिए।",
   "config.friendcreeper.afraidOfCats": "बिल्लियों से डर",
   "config.friendcreeper.afraidOfCats.tooltip": "क्या पालतू क्रीपर बिल्लियों और ओसेलॉट से डरेगा।",
   "config.friendcreeper.naturalRegeneration": "प्राकृतिक पुनर्जनन",

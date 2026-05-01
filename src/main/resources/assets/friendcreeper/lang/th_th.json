@@ -16,6 +16,8 @@
   "config.friendcreeper.renderPoppy.tooltip": "แสดงดอกป๊อปปี้บนหัวครีปเปอร์ที่เลี้ยงไว้หรือไม่",
   "config.friendcreeper.tamedCreeperTexture": "หน้าครีปเปอร์ที่เลี้ยงไว้",
   "config.friendcreeper.tamedCreeperTexture.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะใช้หน้ากำหนดเองหรือไม่ (หน้ายิ้มเมื่อสุขภาพดี หน้าเศร้าเมื่อพลังชีวิตต่ำ)\nหากแพ็กทรัพยากรกำหนดเองของคุณไม่ทำงาน ให้ลองปิดตัวเลือกนี้",
+  "config.friendcreeper.scaredFace": "หน้าตกใจ",
+  "config.friendcreeper.scaredFace.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะแสดงหน้าตกใจเมื่อหนีจากแมมหรือไม่\nต้องเปิดใช้งานหน้าครีปเปอร์ที่เลี้ยงไว้",
   "config.friendcreeper.afraidOfCats": "กลัวแมว",
   "config.friendcreeper.afraidOfCats.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะกลัวแมวและออเซลอตหรือไม่",
   "config.friendcreeper.naturalRegeneration": "ฟื้นฟูตามธรรมชาติ",

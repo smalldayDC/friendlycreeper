@@ -16,6 +16,8 @@
   "config.friendcreeper.renderPoppy.tooltip": "Si le coquelicot est affiché sur la tête des Creepers apprivoisés.",
   "config.friendcreeper.tamedCreeperTexture": "Visage du Creeper apprivoisé",
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Si les Creepers apprivoisés utilisent des visages personnalisés (visage heureux en bonne santé, triste en basse vie).\nSi votre pack de ressources personnalisé ne fonctionne pas, essayez de désactiver cette option.",
+  "config.friendcreeper.scaredFace": "Visage effrayé",
+  "config.friendcreeper.scaredFace.tooltip": "Si les Creepers apprivoisés affichent un visage effrayé lorsqu'ils fuient les chats.\nVisage du Creeper apprivoisé doit être activé.",
   "config.friendcreeper.afraidOfCats": "Peur des chats",
   "config.friendcreeper.afraidOfCats.tooltip": "Si les Creepers apprivoisés ont peur des chats et des ocelots.",
   "config.friendcreeper.naturalRegeneration": "Régénération naturelle",

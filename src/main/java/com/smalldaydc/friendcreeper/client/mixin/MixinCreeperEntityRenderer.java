@@ -43,6 +43,7 @@ public class MixinCreeperEntityRenderer {
         boolean lowHealth = entity.getHealth() / entity.getMaxHealth() < LOW_HEALTH_THRESHOLD;
         fcState.friendcreeper$setLowHealth(lowHealth);
         fcState.friendcreeper$setHasTarget(tc.friendcreeper$hasTarget());
+        fcState.friendcreeper$setFleeing(tc.friendcreeper$isFleeing());
 
         if (tc.friendcreeper$isTamed()) {
             FriendlyCreeperConfig config = FriendlyCreeperConfig.get();
@@ -65,6 +66,12 @@ public class MixinCreeperEntityRenderer {
         if (!FriendlyCreeperConfig.get().tamedCreeperTexture) return;
         // Revert to vanilla face when targeting an enemy
         if (fcState.friendcreeper$hasTarget()) return;
+
+        // Show sad face when fleeing from cats (if enabled)
+        if (fcState.friendcreeper$isFleeing() && FriendlyCreeperConfig.get().scaredFace) {
+            cir.setReturnValue(SAD_TEXTURE);
+            return;
+        }
 
         cir.setReturnValue(fcState.friendcreeper$isLowHealth() ? SAD_TEXTURE : HAPPY_TEXTURE);
     }

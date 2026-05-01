@@ -16,6 +16,8 @@
   "config.friendcreeper.renderPoppy.tooltip": "Чи відображати мак на голові прирученого кріпера.",
   "config.friendcreeper.tamedCreeperTexture": "Обличчя прирученого кріпера",
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Чи буде приручений кріпер використовувати власні обличчя (щасливе обличчя при здоров'ї, сумне при низькому).\nЯкщо ваш власний пакет ресурсів не працює, спробуйте вимкнути цю опцію.",
+  "config.friendcreeper.scaredFace": "Переляканe обличчя",
+  "config.friendcreeper.scaredFace.tooltip": "Чи буде приручений кріпер показувати переляканe обличчя при втечі від котів.\nПотрібно увімкнути обличчя прирученого кріпера.",
   "config.friendcreeper.afraidOfCats": "Боїться котів",
   "config.friendcreeper.afraidOfCats.tooltip": "Чи буде приручений кріпер боятися котів та оцелотів.",
   "config.friendcreeper.naturalRegeneration": "Природна регенерація",

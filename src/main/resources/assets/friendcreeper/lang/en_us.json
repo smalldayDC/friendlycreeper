@@ -16,6 +16,8 @@
   "config.friendcreeper.renderPoppy.tooltip": "Whether to render the poppy on tamed Creepers' heads.",
   "config.friendcreeper.tamedCreeperTexture": "Tamed Creeper Face",
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Whether tamed Creepers use custom faces (happy face when healthy, sad face when low health).\nIf your custom resource pack is not working, try disabling this option.",
+  "config.friendcreeper.scaredFace": "Scared Face",
+  "config.friendcreeper.scaredFace.tooltip": "Whether tamed Creepers show a scared face when fleeing from cats.\nRequires Tamed Creeper Face to be enabled.",
   "config.friendcreeper.afraidOfCats": "Afraid of Cats",
   "config.friendcreeper.afraidOfCats.tooltip": "Whether tamed Creepers are afraid of cats and ocelots.",
   "config.friendcreeper.naturalRegeneration": "Natural Regeneration",

@@ -16,6 +16,8 @@
   "config.friendcreeper.renderPoppy.tooltip": "Se mostrare il papavero sulla testa dei Creeper addomesticati.",
   "config.friendcreeper.tamedCreeperTexture": "Volto del Creeper addomesticato",
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Se i Creeper addomesticati usano volti personalizzati (faccia felice con molta vita, triste con poca vita).\nSe il tuo pacchetto risorse personalizzato non funziona, prova a disattivare questa opzione.",
+  "config.friendcreeper.scaredFace": "Volto spaventato",
+  "config.friendcreeper.scaredFace.tooltip": "Se i Creeper addomesticati mostrano un volto spaventato quando fuggono dai gatti.\nVolto del Creeper addomesticato deve essere attivato.",
   "config.friendcreeper.afraidOfCats": "Paura dei gatti",
   "config.friendcreeper.afraidOfCats.tooltip": "Se i Creeper addomesticati hanno paura dei gatti e degli ocelot.",
   "config.friendcreeper.naturalRegeneration": "Rigenerazione naturale",

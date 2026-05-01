@@ -16,6 +16,8 @@
   "config.friendcreeper.renderPoppy.tooltip": "Ob die Mohnblume auf dem Kopf gezähmter Creeper angezeigt wird.",
   "config.friendcreeper.tamedCreeperTexture": "Gezähmtes Creeper-Gesicht",
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Ob gezähmte Creeper benutzerdefinierte Gesichter verwenden (fröhliches Gesicht bei hoher Gesundheit, trauriges bei niedriger).\nWenn dein benutzerdefiniertes Ressourcenpaket nicht funktioniert, versuche diese Option zu deaktivieren.",
+  "config.friendcreeper.scaredFace": "Ängstliches Gesicht",
+  "config.friendcreeper.scaredFace.tooltip": "Ob gezähmte Creeper ein ängstliches Gesicht zeigen, wenn sie vor Katzen fliehen.\nGezähmtes Creeper-Gesicht muss aktiviert sein.",
   "config.friendcreeper.afraidOfCats": "Angst vor Katzen",
   "config.friendcreeper.afraidOfCats.tooltip": "Ob gezähmte Creeper Angst vor Katzen und Ozelots haben.",
   "config.friendcreeper.naturalRegeneration": "Natürliche Regeneration",

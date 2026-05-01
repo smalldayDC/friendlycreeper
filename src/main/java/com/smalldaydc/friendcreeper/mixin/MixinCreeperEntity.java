@@ -57,6 +57,10 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private static final TrackedData<Boolean> FRIENDCREEPER_HAS_TARGET =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+    @Unique
+    private static final TrackedData<Boolean> FRIENDCREEPER_IS_FLEEING =
+            DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
     @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
     @Unique private @Nullable UUID friendcreeper$avengeTargetUUID = null;
     @Unique private int friendcreeper$tameAttempts = 0;
@@ -125,6 +129,14 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         return this.dataTracker.get(FRIENDCREEPER_HAS_TARGET);
     }
 
+    @Override public boolean friendcreeper$isFleeing() {
+        return this.dataTracker.get(FRIENDCREEPER_IS_FLEEING);
+    }
+
+    @Override public void friendcreeper$setFleeing(boolean fleeing) {
+        this.dataTracker.set(FRIENDCREEPER_IS_FLEEING, fleeing);
+    }
+
     // ── DataTracker ───────────────────────────────────────────────────────────
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -133,6 +145,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         builder.add(FRIENDCREEPER_SITTING, false);
         builder.add(FRIENDCREEPER_OWNER, "");
         builder.add(FRIENDCREEPER_HAS_TARGET, false);
+        builder.add(FRIENDCREEPER_IS_FLEEING, false);
     }
 
     // ── Goals ─────────────────────────────────────────────────────────────────
@@ -141,7 +154,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private void friendcreeper$initGoals(CallbackInfo ci) {
         CreeperEntity self = (CreeperEntity) (Object) this;
         this.goalSelector.add(1, new CreeperSitGoal(self));
-        this.goalSelector.add(2, new CreeperFollowOwnerGoal(self));
+        this.goalSelector.add(4, new CreeperFollowOwnerGoal(self));
         this.targetSelector.add(0, new CreeperSuppressTargetGoal(self));
 
         // Replace vanilla flee goals with conditional ones (respects afraidOfCats config)
@@ -152,12 +165,32 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
                 if (friendcreeper$isTamed() && !FriendlyCreeperConfig.get().afraidOfCats) return false;
                 return super.canStart();
             }
+            @Override
+            public void start() {
+                super.start();
+                friendcreeper$setFleeing(true);
+            }
+            @Override
+            public void stop() {
+                super.stop();
+                friendcreeper$setFleeing(false);
+            }
         });
         this.goalSelector.add(3, new FleeEntityGoal<>(self, CatEntity.class, 6.0F, 1.0, 1.2) {
             @Override
             public boolean canStart() {
                 if (friendcreeper$isTamed() && !FriendlyCreeperConfig.get().afraidOfCats) return false;
                 return super.canStart();
+            }
+            @Override
+            public void start() {
+                super.start();
+                friendcreeper$setFleeing(true);
+            }
+            @Override
+            public void stop() {
+                super.stop();
+                friendcreeper$setFleeing(false);
             }
         });
     }

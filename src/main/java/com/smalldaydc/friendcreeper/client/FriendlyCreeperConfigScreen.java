@@ -40,6 +40,7 @@ public class FriendlyCreeperConfigScreen {
         addBooleanEntry(client, eb, "renderPoppy", true, () -> config.renderPoppy, v -> config.renderPoppy = v);
         addBooleanEntry(client, eb, "witherRoseOnLowHealth", true, () -> config.witherRoseOnLowHealth, v -> config.witherRoseOnLowHealth = v);
         addBooleanEntry(client, eb, "tamedCreeperTexture", true, () -> config.tamedCreeperTexture, v -> config.tamedCreeperTexture = v);
+        addBooleanEntry(client, eb, "scaredFace", true, () -> config.scaredFace, v -> config.scaredFace = v);
 
         return builder.build();
     }

@@ -16,6 +16,7 @@ public class MixinCreeperEntityRenderState implements IFriendlyCreeperRenderStat
     @Unique private boolean friendcreeper$sitting = false;
     @Unique private boolean friendcreeper$lowHealth = false;
     @Unique private boolean friendcreeper$hasTarget = false;
+    @Unique private boolean friendcreeper$fleeing = false;
     @Unique private final ItemRenderState friendcreeper$poppyRenderState = new ItemRenderState();
 
     @Override
@@ -56,6 +57,16 @@ public class MixinCreeperEntityRenderState implements IFriendlyCreeperRenderStat
     @Override
     public void friendcreeper$setHasTarget(boolean hasTarget) {
         this.friendcreeper$hasTarget = hasTarget;
+    }
+
+    @Override
+    public boolean friendcreeper$isFleeing() {
+        return friendcreeper$fleeing;
+    }
+
+    @Override
+    public void friendcreeper$setFleeing(boolean fleeing) {
+        this.friendcreeper$fleeing = fleeing;
     }
 
     @Override

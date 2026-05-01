@@ -20,4 +20,7 @@ public interface ITamedCreeper {
     void friendcreeper$setTameAttempts(int attempts);
 
     boolean friendcreeper$hasTarget();
+
+    boolean friendcreeper$isFleeing();
+    void friendcreeper$setFleeing(boolean fleeing);
 }

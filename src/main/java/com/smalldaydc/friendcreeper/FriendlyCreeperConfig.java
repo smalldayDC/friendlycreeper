@@ -42,6 +42,9 @@ public class FriendlyCreeperConfig {
     /** Whether tamed Creepers use custom textures (happy/sad face). Client-side only. Default: true */
     public boolean tamedCreeperTexture = true;
 
+    /** Whether tamed Creepers show a scared face when fleeing from cats. Client-side only. Default: true */
+    public boolean scaredFace = true;
+
     /** Whether tamed Creepers are afraid of cats and ocelots. Default: true */
     public boolean afraidOfCats = true;
 

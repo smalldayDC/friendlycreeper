@@ -16,6 +16,8 @@
   "config.friendcreeper.renderPoppy.tooltip": "Отображать ли мак на голове прирученного крипера.",
   "config.friendcreeper.tamedCreeperTexture": "Лицо прирученного крипера",
   "config.friendcreeper.tamedCreeperTexture.tooltip": "Будет ли прирученный крипер использовать пользовательские лица (счастливое лицо при высоком здоровье, грустное при низком).\nЕсли ваш пользовательский набор ресурсов не работает, попробуйте отключить эту опцию.",
+  "config.friendcreeper.scaredFace": "Испуганное лицо",
+  "config.friendcreeper.scaredFace.tooltip": "Будет ли прирученный крипер показывать испуганное лицо при бегстве от кошек.\nТребуется включённое лицо прирученного крипера.",
   "config.friendcreeper.afraidOfCats": "Боится кошек",
   "config.friendcreeper.afraidOfCats.tooltip": "Будет ли прирученный крипер бояться кошек и оцелотов.",
   "config.friendcreeper.naturalRegeneration": "Естественная регенерация",
