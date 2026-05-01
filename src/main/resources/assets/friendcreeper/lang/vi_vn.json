@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "Vui lòng cài đặt trước khi cấu hình qua giao diện đồ họa.",
   "screen.friendcreeper.noconfig.line3": "Bạn có thể tải từ Modrinth hoặc CurseForge.",
   "screen.friendcreeper.noconfig.back": "Quay lại",
-  "modmenu.descriptionTranslation.friendcreeper": "Thuần hóa Creeper bằng thuốc súng và biến chúng thành bạn của bạn."
+  "modmenu.descriptionTranslation.friendcreeper": "Thuần hóa Creeper bằng thuốc súng và biến chúng thành bạn của bạn.",
+  "jade.friendcreeper.owner": "Chủ: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "Chủ Creeper đã thuần hóa"
 }

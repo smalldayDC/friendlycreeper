@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "Please install it before configuring via the graphical interface.",
   "screen.friendcreeper.noconfig.line3": "You can download it from Modrinth or CurseForge.",
   "screen.friendcreeper.noconfig.back": "Back",
-  "modmenu.descriptionTranslation.friendcreeper": "Tame Creepers with gunpowder and make them your friend."
+  "modmenu.descriptionTranslation.friendcreeper": "Tame Creepers with gunpowder and make them your friend.",
+  "jade.friendcreeper.owner": "Owner: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "Tamed Creeper Owner"
 }

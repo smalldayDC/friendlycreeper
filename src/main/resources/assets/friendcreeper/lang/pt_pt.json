@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "Instale-a antes de configurar através da interface gráfica.",
   "screen.friendcreeper.noconfig.line3": "Pode descarregá-la do Modrinth ou CurseForge.",
   "screen.friendcreeper.noconfig.back": "Voltar",
-  "modmenu.descriptionTranslation.friendcreeper": "Domestique Creepers com pólvora e torne-os seu amigo."
+  "modmenu.descriptionTranslation.friendcreeper": "Domestique Creepers com pólvora e torne-os seu amigo.",
+  "jade.friendcreeper.owner": "Dono: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "Dono do Creeper domesticado"
 }

@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "グラフィカルインターフェースで設定するには、先にインストールしてください。",
   "screen.friendcreeper.noconfig.line3": "Modrinth または CurseForge からダウンロードできます。",
   "screen.friendcreeper.noconfig.back": "戻る",
-  "modmenu.descriptionTranslation.friendcreeper": "火薬でクリーパーを手懐けて、あなたの友達にしよう。"
+  "modmenu.descriptionTranslation.friendcreeper": "火薬でクリーパーを手懐けて、あなたの友達にしよう。",
+  "jade.friendcreeper.owner": "オーナー：%s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "手懐けたクリーパーのオーナー"
 }

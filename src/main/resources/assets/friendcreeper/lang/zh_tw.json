@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "請先安裝後再透過圖形介面進行設定。",
   "screen.friendcreeper.noconfig.line3": "您可以從 Modrinth 或 CurseForge 下載。",
   "screen.friendcreeper.noconfig.back": "返回",
-  "modmenu.descriptionTranslation.friendcreeper": "用火藥馴服苦力怕，讓牠成為你的朋友。"
+  "modmenu.descriptionTranslation.friendcreeper": "用火藥馴服苦力怕，讓牠成為你的朋友。",
+  "jade.friendcreeper.owner": "主人：%s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "馴服苦力怕的主人"
 }

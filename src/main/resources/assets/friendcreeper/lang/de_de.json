@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "Bitte installiere es, bevor du über die grafische Oberfläche konfigurierst.",
   "screen.friendcreeper.noconfig.line3": "Du kannst es von Modrinth oder CurseForge herunterladen.",
   "screen.friendcreeper.noconfig.back": "Zurück",
-  "modmenu.descriptionTranslation.friendcreeper": "Zähme Creeper mit Schwarzpulver und mache sie zu deinem Freund."
+  "modmenu.descriptionTranslation.friendcreeper": "Zähme Creeper mit Schwarzpulver und mache sie zu deinem Freund.",
+  "jade.friendcreeper.owner": "Besitzer: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "Besitzer des gezähmten Creepers"
 }

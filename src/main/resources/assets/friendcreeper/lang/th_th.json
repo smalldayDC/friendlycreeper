@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "กรุณาติดตั้งก่อนทำการตั้งค่าผ่านอินเทอร์เฟซกราฟิก",
   "screen.friendcreeper.noconfig.line3": "คุณสามารถดาวน์โหลดได้จาก Modrinth หรือ CurseForge",
   "screen.friendcreeper.noconfig.back": "กลับ",
-  "modmenu.descriptionTranslation.friendcreeper": "เลี้ยงครีปเปอร์ด้วยดินปืนและทำให้พวกมันเป็นเพื่อนของคุณ"
+  "modmenu.descriptionTranslation.friendcreeper": "เลี้ยงครีปเปอร์ด้วยดินปืนและทำให้พวกมันเป็นเพื่อนของคุณ",
+  "jade.friendcreeper.owner": "เจ้าของ: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "เจ้าของครีปเปอร์ที่เลี้ยงไว้"
 }

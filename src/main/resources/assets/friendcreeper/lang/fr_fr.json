@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "Veuillez l'installer avant de configurer via l'interface graphique.",
   "screen.friendcreeper.noconfig.line3": "Vous pouvez le télécharger depuis Modrinth ou CurseForge.",
   "screen.friendcreeper.noconfig.back": "Retour",
-  "modmenu.descriptionTranslation.friendcreeper": "Apprivoisez les Creepers avec de la poudre à canon et faites-en votre ami."
+  "modmenu.descriptionTranslation.friendcreeper": "Apprivoisez les Creepers avec de la poudre à canon et faites-en votre ami.",
+  "jade.friendcreeper.owner": "Propriétaire : %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "Propriétaire du Creeper apprivoisé"
 }

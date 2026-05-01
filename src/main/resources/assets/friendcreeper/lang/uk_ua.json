@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "Встановіть його перед налаштуванням через графічний інтерфейс.",
   "screen.friendcreeper.noconfig.line3": "Ви можете завантажити його з Modrinth або CurseForge.",
   "screen.friendcreeper.noconfig.back": "Назад",
-  "modmenu.descriptionTranslation.friendcreeper": "Приручіть кріпера порохом та зробіть його своїм другом."
+  "modmenu.descriptionTranslation.friendcreeper": "Приручіть кріпера порохом та зробіть його своїм другом.",
+  "jade.friendcreeper.owner": "Власник: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "Власник прирученого кріпера"
 }

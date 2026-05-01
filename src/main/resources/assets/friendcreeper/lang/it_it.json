@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "Installala prima di configurare tramite l'interfaccia grafica.",
   "screen.friendcreeper.noconfig.line3": "Puoi scaricarla da Modrinth o CurseForge.",
   "screen.friendcreeper.noconfig.back": "Indietro",
-  "modmenu.descriptionTranslation.friendcreeper": "Addomestica i Creeper con la polvere da sparo e rendili tuoi amici."
+  "modmenu.descriptionTranslation.friendcreeper": "Addomestica i Creeper con la polvere da sparo e rendili tuoi amici.",
+  "jade.friendcreeper.owner": "Proprietario: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "Proprietario del Creeper addomesticato"
 }

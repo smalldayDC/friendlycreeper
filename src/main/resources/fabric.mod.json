@@ -16,7 +16,8 @@
   "entrypoints": {
     "main": ["com.smalldaydc.friendcreeper.FriendlyCreeperMod"],
     "client": ["com.smalldaydc.friendcreeper.client.FriendlyCreeperClient"],
-    "modmenu": ["com.smalldaydc.friendcreeper.client.FriendlyCreeperModMenuEntry"]
+    "modmenu": ["com.smalldaydc.friendcreeper.client.FriendlyCreeperModMenuEntry"],
+    "jade": ["com.smalldaydc.friendcreeper.compat.jade.FriendCreeperJadePlugin"]
   },
   "custom": {
     "modmenu": {
@@ -36,6 +37,7 @@
   },
   "suggests": {
     "cloth-config": ">=21.11.153",
-    "modmenu": ">=17.0.0"
+    "modmenu": ">=17.0.0",
+    "jade": "*"
   }
 }

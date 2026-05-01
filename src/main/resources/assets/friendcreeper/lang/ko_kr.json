@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "그래픽 인터페이스에서 설정하려면 먼저 설치해 주세요.",
   "screen.friendcreeper.noconfig.line3": "Modrinth 또는 CurseForge에서 다운로드할 수 있습니다.",
   "screen.friendcreeper.noconfig.back": "뒤로",
-  "modmenu.descriptionTranslation.friendcreeper": "화약으로 크리퍼를 길들여 친구로 만드세요."
+  "modmenu.descriptionTranslation.friendcreeper": "화약으로 크리퍼를 길들여 친구로 만드세요.",
+  "jade.friendcreeper.owner": "주인: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "길들인 크리퍼 주인"
 }

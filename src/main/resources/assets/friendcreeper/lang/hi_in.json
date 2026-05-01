@@ -26,5 +26,7 @@
   "screen.friendcreeper.noconfig.line2": "ग्राफिकल इंटरफ़ेस से सेटिंग करने से पहले इसे इंस्टॉल करें।",
   "screen.friendcreeper.noconfig.line3": "आप इसे Modrinth या CurseForge से डाउनलोड कर सकते हैं।",
   "screen.friendcreeper.noconfig.back": "वापस",
-  "modmenu.descriptionTranslation.friendcreeper": "बारूद से क्रीपर को पालतू बनाएँ और उसे अपना दोस्त बनाएँ।"
+  "modmenu.descriptionTranslation.friendcreeper": "बारूद से क्रीपर को पालतू बनाएँ और उसे अपना दोस्त बनाएँ।",
+  "jade.friendcreeper.owner": "मालिक: %s",
+  "config.jade.plugin_friendcreeper.creeper_owner": "पालतू क्रीपर का मालिक"
 }
