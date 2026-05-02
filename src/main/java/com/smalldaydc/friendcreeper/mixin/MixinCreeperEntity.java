@@ -3,11 +3,14 @@ package com.smalldaydc.friendcreeper.mixin;
 import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
 import com.smalldaydc.friendcreeper.FriendlyCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
+import com.smalldaydc.friendcreeper.goal.CreeperFeedCatGoal;
 import com.smalldaydc.friendcreeper.goal.CreeperFollowOwnerGoal;
+import com.smalldaydc.friendcreeper.goal.CreeperPickupFishGoal;
 import com.smalldaydc.friendcreeper.goal.CreeperSitGoal;
 import com.smalldaydc.friendcreeper.goal.CreeperSuppressTargetGoal;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.data.DataTracker;
@@ -18,11 +21,13 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.Uuids;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -61,7 +66,12 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private static final TrackedData<Boolean> FRIENDCREEPER_IS_FLEEING =
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+    @Unique
+    private static final TrackedData<ItemStack> FRIENDCREEPER_HELD_FISH =
+            DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
+
     @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
+    @Unique private static final float FISH_DROP_HEALTH_THRESHOLD = 0.25f;
     @Unique private @Nullable UUID friendcreeper$avengeTargetUUID = null;
     @Unique private int friendcreeper$tameAttempts = 0;
     @Unique private int friendcreeper$hurtSoundCooldown = 0;
@@ -137,6 +147,14 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         this.dataTracker.set(FRIENDCREEPER_IS_FLEEING, fleeing);
     }
 
+    @Override public ItemStack friendcreeper$getHeldFish() {
+        return this.dataTracker.get(FRIENDCREEPER_HELD_FISH);
+    }
+
+    @Override public void friendcreeper$setHeldFish(ItemStack stack) {
+        this.dataTracker.set(FRIENDCREEPER_HELD_FISH, stack);
+    }
+
     // ── DataTracker ───────────────────────────────────────────────────────────
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
@@ -146,6 +164,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         builder.add(FRIENDCREEPER_OWNER, "");
         builder.add(FRIENDCREEPER_HAS_TARGET, false);
         builder.add(FRIENDCREEPER_IS_FLEEING, false);
+        builder.add(FRIENDCREEPER_HELD_FISH, ItemStack.EMPTY);
     }
 
     // ── Goals ─────────────────────────────────────────────────────────────────
@@ -154,7 +173,9 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
     private void friendcreeper$initGoals(CallbackInfo ci) {
         CreeperEntity self = (CreeperEntity) (Object) this;
         this.goalSelector.add(1, new CreeperSitGoal(self));
+        this.goalSelector.add(3, new CreeperFeedCatGoal(self));
         this.goalSelector.add(4, new CreeperFollowOwnerGoal(self));
+        this.goalSelector.add(5, new CreeperPickupFishGoal(self));
         this.targetSelector.add(0, new CreeperSuppressTargetGoal(self));
 
         // Replace vanilla flee goals with conditional ones (respects afraidOfCats config)
@@ -265,6 +286,41 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             this.heal(1.0f);
         }
 
+        // Drop held fish: low health / afraidOfCats / no hurt owner cat nearby
+        ItemStack heldFish = friendcreeper$getHeldFish();
+        if (!heldFish.isEmpty()) {
+            boolean lowHealth = this.getHealth() / this.getMaxHealth() < FISH_DROP_HEALTH_THRESHOLD;
+            boolean shouldDrop = lowHealth || FriendlyCreeperConfig.get().afraidOfCats;
+
+            // Check for nearby hurt owner cat every 20 ticks (1 second) to reduce overhead
+            if (!shouldDrop && this.age % 20 == 0) {
+                UUID ownerUUID = friendcreeper$getOwnerUUID();
+                boolean hasHurtOwnerCat = false;
+                if (ownerUUID != null) {
+                    Box searchBox = this.getBoundingBox().expand(16.0);
+                    hasHurtOwnerCat = !this.getEntityWorld().getEntitiesByClass(
+                            CatEntity.class, searchBox,
+                            cat -> cat.isAlive()
+                                    && cat.isTamed()
+                                    && cat.getOwner() != null
+                                    && ownerUUID.equals(cat.getOwner().getUuid())
+                                    && cat.getHealth() < cat.getMaxHealth()).isEmpty();
+                }
+                if (!hasHurtOwnerCat) {
+                    shouldDrop = true;
+                }
+            }
+
+            if (shouldDrop) {
+                ItemEntity drop = new ItemEntity(
+                        this.getEntityWorld(),
+                        this.getX(), this.getY() + 0.5, this.getZ(),
+                        heldFish.copy());
+                this.getEntityWorld().spawnEntity(drop);
+                friendcreeper$setHeldFish(ItemStack.EMPTY);
+            }
+        }
+
         // Sync hasTarget to client for texture switching
         boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
         if (this.dataTracker.get(FRIENDCREEPER_HAS_TARGET) != hasTarget) {
@@ -283,6 +339,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         if (ownerUUID != null) {
             view.put(FriendlyCreeperMod.NBT_OWNER, Uuids.INT_STREAM_CODEC, ownerUUID);
         }
+        // Save held fish: 0=none, 1=cod, 2=salmon
+        ItemStack fish = friendcreeper$getHeldFish();
+        if (!fish.isEmpty()) {
+            view.putInt(FriendlyCreeperMod.NBT_HELD_FISH, fish.isOf(Items.COD) ? 1 : 2);
+        }
     }
 
     @Inject(method = "readCustomData", at = @At("TAIL"))
@@ -295,5 +356,12 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         friendcreeper$tameAttempts = view.getInt(FriendlyCreeperMod.NBT_ATTEMPTS, 0);
         Optional<UUID> ownerOpt = view.read(FriendlyCreeperMod.NBT_OWNER, Uuids.INT_STREAM_CODEC);
         ownerOpt.ifPresent(this::friendcreeper$setOwnerUUID);
+        // Load held fish
+        int fishType = view.getInt(FriendlyCreeperMod.NBT_HELD_FISH, 0);
+        if (fishType == 1) {
+            this.dataTracker.set(FRIENDCREEPER_HELD_FISH, new ItemStack(Items.COD));
+        } else if (fishType == 2) {
+            this.dataTracker.set(FRIENDCREEPER_HELD_FISH, new ItemStack(Items.SALMON));
+        }
     }
 }

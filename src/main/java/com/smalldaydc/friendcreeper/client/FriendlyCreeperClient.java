@@ -1,6 +1,7 @@
 package com.smalldaydc.friendcreeper.client;
 
 import com.smalldaydc.friendcreeper.ITamedCreeper;
+import com.smalldaydc.friendcreeper.client.render.CreeperFishFeature;
 import com.smalldaydc.friendcreeper.client.render.CreeperPoppyFeature;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -45,6 +46,11 @@ public class FriendlyCreeperClient implements ClientModInitializer {
                 if (entityType == EntityType.CREEPER && entityRenderer instanceof CreeperEntityRenderer) {
                     registrationHelper.register(
                         new CreeperPoppyFeature(
+                            (CreeperEntityRenderer) entityRenderer
+                        )
+                    );
+                    registrationHelper.register(
+                        new CreeperFishFeature(
                             (CreeperEntityRenderer) entityRenderer
                         )
                     );

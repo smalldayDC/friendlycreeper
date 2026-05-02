@@ -22,6 +22,8 @@
   "config.friendcreeper.afraidOfCats.tooltip": "Whether tamed Creepers are afraid of cats and ocelots.",
   "config.friendcreeper.naturalRegeneration": "Natural Regeneration",
   "config.friendcreeper.naturalRegeneration.tooltip": "Whether tamed Creepers naturally regenerate health over time.",
+  "config.friendcreeper.feedOwnerCat": "Feed Owner's Cat",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Whether tamed Creepers pick up raw fish and feed the owner's cats.\nRequires Afraid of Cats to be disabled.",
   "config.friendcreeper.witherRoseOnLowHealth": "Wither Rose on Low Health",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Whether tamed Creepers show a wither rose instead of a poppy when at low health.\nRequires Render Poppy to be enabled.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API is not installed",

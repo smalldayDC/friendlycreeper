@@ -1,5 +1,6 @@
 package com.smalldaydc.friendcreeper;
 
+import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
@@ -23,4 +24,7 @@ public interface ITamedCreeper {
 
     boolean friendcreeper$isFleeing();
     void friendcreeper$setFleeing(boolean fleeing);
+
+    ItemStack friendcreeper$getHeldFish();
+    void friendcreeper$setHeldFish(ItemStack stack);
 }

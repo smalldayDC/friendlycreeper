@@ -22,6 +22,8 @@
   "config.friendcreeper.afraidOfCats.tooltip": "手懐けたクリーパーがネコやヤマネコを恐れるかどうか。",
   "config.friendcreeper.naturalRegeneration": "自然回復",
   "config.friendcreeper.naturalRegeneration.tooltip": "手懐けたクリーパーが時間の経過とともに自然に体力を回復するかどうか。",
+  "config.friendcreeper.feedOwnerCat": "オーナーのネコに給餌",
+  "config.friendcreeper.feedOwnerCat.tooltip": "手懐けたクリーパーが生魚を拾ってオーナーのネコに給餌するかどうか。\nネコを恐れるを無効にする必要があります。",
   "config.friendcreeper.witherRoseOnLowHealth": "低体力時にウィザーローズ",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "手懐けたクリーパーが低体力時にポピーの代わりにウィザーローズを表示するかどうか。\nポピーの描画を有効にする必要があります。",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API がインストールされていません",

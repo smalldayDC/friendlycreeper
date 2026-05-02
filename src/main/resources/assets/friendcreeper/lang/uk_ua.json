@@ -22,6 +22,8 @@
   "config.friendcreeper.afraidOfCats.tooltip": "Чи буде приручений кріпер боятися котів та оцелотів.",
   "config.friendcreeper.naturalRegeneration": "Природна регенерація",
   "config.friendcreeper.naturalRegeneration.tooltip": "Чи буде приручений кріпер природно відновлювати здоров'я з часом.",
+  "config.friendcreeper.feedOwnerCat": "Годувати кота власника",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Чи буде приручений кріпер підбирати сиру рибу та годувати кота власника.\nПотрібно вимкнути боязнь котів.",
   "config.friendcreeper.witherRoseOnLowHealth": "Троянда висушення при низькому здоров'ї",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Чи буде приручений кріпер показувати троянду висушення замість маку при низькому здоров'ї.\nПотрібно увімкнути відображення маку.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API не встановлено",

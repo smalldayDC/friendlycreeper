@@ -22,6 +22,8 @@
   "config.friendcreeper.afraidOfCats.tooltip": "Creeper đã thuần hóa có sợ mèo và mèo rừng hay không.",
   "config.friendcreeper.naturalRegeneration": "Hồi phục tự nhiên",
   "config.friendcreeper.naturalRegeneration.tooltip": "Creeper đã thuần hóa có tự động hồi phục máu theo thời gian hay không.",
+  "config.friendcreeper.feedOwnerCat": "Cho mèo của chủ ăn",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Creeper đã thuần hóa có nhặt cá sống và cho mèo của chủ ăn hay không.\nCần tắt tùy chọn sợ mèo.",
   "config.friendcreeper.witherRoseOnLowHealth": "Hoa hồng héo khi máu thấp",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Creeper đã thuần hóa có hiển thị hoa hồng héo thay cho hoa anh túc khi máu thấp hay không.\nCần bật hiển thị hoa anh túc.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API chưa được cài đặt",

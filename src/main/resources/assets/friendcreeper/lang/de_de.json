@@ -22,6 +22,8 @@
   "config.friendcreeper.afraidOfCats.tooltip": "Ob gezähmte Creeper Angst vor Katzen und Ozelots haben.",
   "config.friendcreeper.naturalRegeneration": "Natürliche Regeneration",
   "config.friendcreeper.naturalRegeneration.tooltip": "Ob gezähmte Creeper sich mit der Zeit natürlich regenerieren.",
+  "config.friendcreeper.feedOwnerCat": "Katze des Besitzers füttern",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Ob gezähmte Creeper rohen Fisch aufheben und die Katze des Besitzers füttern.\nAngst vor Katzen muss deaktiviert sein.",
   "config.friendcreeper.witherRoseOnLowHealth": "Withered Rose bei niedriger Gesundheit",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Ob gezähmte Creeper bei niedriger Gesundheit eine Withered Rose statt einer Mohnblume anzeigen.\nMohnblume anzeigen muss aktiviert sein.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API ist nicht installiert",

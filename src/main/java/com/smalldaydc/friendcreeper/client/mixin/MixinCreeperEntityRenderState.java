@@ -18,6 +18,7 @@ public class MixinCreeperEntityRenderState implements IFriendlyCreeperRenderStat
     @Unique private boolean friendcreeper$hasTarget = false;
     @Unique private boolean friendcreeper$fleeing = false;
     @Unique private final ItemRenderState friendcreeper$poppyRenderState = new ItemRenderState();
+    @Unique private final ItemRenderState friendcreeper$fishRenderState = new ItemRenderState();
 
     @Override
     public boolean friendcreeper$isTamed() {
@@ -72,5 +73,10 @@ public class MixinCreeperEntityRenderState implements IFriendlyCreeperRenderStat
     @Override
     public ItemRenderState friendcreeper$getPoppyRenderState() {
         return friendcreeper$poppyRenderState;
+    }
+
+    @Override
+    public ItemRenderState friendcreeper$getFishRenderState() {
+        return friendcreeper$fishRenderState;
     }
 }

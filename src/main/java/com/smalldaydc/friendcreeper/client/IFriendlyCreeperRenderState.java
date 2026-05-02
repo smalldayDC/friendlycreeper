@@ -23,4 +23,5 @@ public interface IFriendlyCreeperRenderState {
     void friendcreeper$setFleeing(boolean fleeing);
 
     ItemRenderState friendcreeper$getPoppyRenderState();
+    ItemRenderState friendcreeper$getFishRenderState();
 }

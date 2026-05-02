@@ -22,6 +22,8 @@
   "config.friendcreeper.afraidOfCats.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะกลัวแมวและออเซลอตหรือไม่",
   "config.friendcreeper.naturalRegeneration": "ฟื้นฟูตามธรรมชาติ",
   "config.friendcreeper.naturalRegeneration.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะฟื้นฟูพลังชีวิตตามธรรมชาติเมื่อเวลาผ่านไปหรือไม่",
+  "config.friendcreeper.feedOwnerCat": "ให้อาหารแมวของเจ้าของ",
+  "config.friendcreeper.feedOwnerCat.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะเก็บปลาดิบและให้อาหารแมวของเจ้าของหรือไม่\nต้องปิดใช้งานกลัวแมว",
   "config.friendcreeper.witherRoseOnLowHealth": "ดอกกุหลาบวิเทอร์เมื่อพลังชีวิตต่ำ",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "ครีปเปอร์ที่เลี้ยงไว้จะแสดงดอกกุหลาบวิเทอร์แทนดอกป๊อปปี้เมื่อพลังชีวิตต่ำหรือไม่\nต้องเปิดใช้งานแสดงดอกป๊อปปี้",
   "screen.friendcreeper.noconfig.line1": "ยังไม่ได้ติดตั้ง Cloth Config API",

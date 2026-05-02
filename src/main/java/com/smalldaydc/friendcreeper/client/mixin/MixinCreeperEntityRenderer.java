@@ -53,8 +53,19 @@ public class MixinCreeperEntityRenderer {
             MinecraftClient.getInstance().getItemModelManager()
                     .updateForNonLivingEntity(fcState.friendcreeper$getPoppyRenderState(),
                             flowerStack, ItemDisplayContext.GROUND, entity);
+
+            // Update fish render state
+            ItemStack heldFish = tc.friendcreeper$getHeldFish();
+            if (!heldFish.isEmpty()) {
+                MinecraftClient.getInstance().getItemModelManager()
+                        .updateForNonLivingEntity(fcState.friendcreeper$getFishRenderState(),
+                                heldFish, ItemDisplayContext.GROUND, entity);
+            } else {
+                fcState.friendcreeper$getFishRenderState().clear();
+            }
         } else {
             fcState.friendcreeper$getPoppyRenderState().clear();
+            fcState.friendcreeper$getFishRenderState().clear();
         }
     }
 
