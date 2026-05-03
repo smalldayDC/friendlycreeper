@@ -1,6 +1,7 @@
 package com.smalldaydc.friendcreeper.client.mixin;
 
 import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendlyCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import com.smalldaydc.friendcreeper.client.IFriendlyCreeperRenderState;
 import net.fabricmc.api.EnvType;
@@ -26,7 +27,6 @@ public class MixinCreeperEntityRenderer {
 
     @Unique private static final ItemStack POPPY_STACK = new ItemStack(Items.POPPY);
     @Unique private static final ItemStack WITHER_ROSE_STACK = new ItemStack(Items.WITHER_ROSE);
-    @Unique private static final float LOW_HEALTH_THRESHOLD = 0.25f;
     @Unique private static final Identifier HAPPY_TEXTURE = Identifier.of("friendcreeper", "textures/entity/creeper/happy.png");
     @Unique private static final Identifier SAD_TEXTURE = Identifier.of("friendcreeper", "textures/entity/creeper/sad.png");
 
@@ -40,7 +40,7 @@ public class MixinCreeperEntityRenderer {
         fcState.friendcreeper$setTamed(tc.friendcreeper$isTamed());
         fcState.friendcreeper$setSitting(tc.friendcreeper$isSitting());
 
-        boolean lowHealth = entity.getHealth() / entity.getMaxHealth() < LOW_HEALTH_THRESHOLD;
+        boolean lowHealth = entity.getHealth() / entity.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD;
         fcState.friendcreeper$setLowHealth(lowHealth);
         fcState.friendcreeper$setHasTarget(tc.friendcreeper$hasTarget());
         fcState.friendcreeper$setFleeing(tc.friendcreeper$isFleeing());

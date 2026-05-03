@@ -27,7 +27,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.Uuids;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -71,7 +70,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
 
     @Unique private static final double CHASE_RANGE_SQ = 16.0 * 16.0;
-    @Unique private static final float FISH_DROP_HEALTH_THRESHOLD = 0.25f;
     @Unique private @Nullable UUID friendcreeper$avengeTargetUUID = null;
     @Unique private int friendcreeper$tameAttempts = 0;
     @Unique private int friendcreeper$hurtSoundCooldown = 0;
@@ -226,7 +224,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             if (friendcreeper$hurtSoundCooldown > 0) {
                 friendcreeper$hurtSoundCooldown--;
             } else if (FriendlyCreeperConfig.get().hurtSound
-                    && this.getHealth() / this.getMaxHealth() < 0.25f) {
+                    && this.getHealth() / this.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD) {
                 if (this.getRandom().nextInt(300) == 0) {
                     this.getEntityWorld().playSoundClient(
                             this.getX(), this.getY(), this.getZ(),
@@ -286,28 +284,19 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             this.heal(1.0f);
         }
 
-        // Drop held fish: low health / afraidOfCats / no hurt owner cat nearby
+        // Compute once, reuse for fish drop check and DataTracker sync
+        boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
+
+        // Drop held fish: low health / has target / afraidOfCats / no hurt owner cat nearby
         ItemStack heldFish = friendcreeper$getHeldFish();
         if (!heldFish.isEmpty()) {
-            boolean lowHealth = this.getHealth() / this.getMaxHealth() < FISH_DROP_HEALTH_THRESHOLD;
-            boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
+            boolean lowHealth = this.getHealth() / this.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD;
             boolean shouldDrop = lowHealth || hasTarget || FriendlyCreeperConfig.get().afraidOfCats;
 
             // Check for nearby hurt owner cat every 20 ticks (1 second) to reduce overhead
             if (!shouldDrop && this.age % 20 == 0) {
-                UUID ownerUUID = friendcreeper$getOwnerUUID();
-                boolean hasHurtOwnerCat = false;
-                if (ownerUUID != null) {
-                    Box searchBox = this.getBoundingBox().expand(16.0);
-                    hasHurtOwnerCat = !this.getEntityWorld().getEntitiesByClass(
-                            CatEntity.class, searchBox,
-                            cat -> cat.isAlive()
-                                    && cat.isTamed()
-                                    && cat.getOwner() != null
-                                    && ownerUUID.equals(cat.getOwner().getUuid())
-                                    && cat.getHealth() < cat.getMaxHealth()).isEmpty();
-                }
-                if (!hasHurtOwnerCat) {
+                CreeperEntity self = (CreeperEntity) (Object) this;
+                if (FriendlyCreeperMod.findHurtOwnerCats(self, FriendlyCreeperMod.CAT_SEARCH_RANGE).isEmpty()) {
                     shouldDrop = true;
                 }
             }
@@ -323,7 +312,6 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         // Sync hasTarget to client for texture switching
-        boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
         if (this.dataTracker.get(FRIENDCREEPER_HAS_TARGET) != hasTarget) {
             this.dataTracker.set(FRIENDCREEPER_HAS_TARGET, hasTarget);
         }

@@ -5,10 +5,13 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Box;
+import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.UUID;
 
 public class FriendlyCreeperMod implements ModInitializer {
@@ -17,6 +20,16 @@ public class FriendlyCreeperMod implements ModInitializer {
     public static final String NBT_SITTING  = "FriendlySitting";
     public static final String NBT_ATTEMPTS = "FriendlyTameAttempts";
     public static final String NBT_HELD_FISH = "FriendlyHeldFish";
+
+    /** Health ratio threshold shared across all low-health checks (goals, tick, renderer). */
+    public static final float LOW_HEALTH_THRESHOLD = 0.25f;
+    /** Bounding box reach for fish pickup and cat feeding interactions. */
+    public static final double INTERACTION_REACH_XZ = 1.5;
+    public static final double INTERACTION_REACH_Y = 0.5;
+    /** Movement speed for pickup/feed goals. */
+    public static final double INTERACTION_MOVE_SPEED = 1.0;
+    /** Search range for finding owner's cats. */
+    public static final double CAT_SEARCH_RANGE = 16.0;
 
     private static final double SEARCH_RADIUS = 64;
     private static final double SEARCH_HEIGHT = 32;
@@ -91,5 +104,22 @@ public class FriendlyCreeperMod implements ModInitializer {
                 return av != null && av.equals(dead.getUuid());
             }).forEach(c -> ((ITamedCreeper) c).friendcreeper$setAvengeTargetUUID(null));
         });
+    }
+
+    /**
+     * Find hurt cats belonging to the same owner within the given range.
+     * Shared by CreeperPickupFishGoal, CreeperFeedCatGoal, and MixinCreeperEntity tick.
+     */
+    public static List<CatEntity> findHurtOwnerCats(CreeperEntity creeper, double range) {
+        UUID ownerUUID = ((ITamedCreeper) creeper).friendcreeper$getOwnerUUID();
+        if (ownerUUID == null) return List.of();
+        Box searchBox = creeper.getBoundingBox().expand(range);
+        return creeper.getEntityWorld().getEntitiesByClass(
+                CatEntity.class, searchBox,
+                cat -> cat.isAlive()
+                        && cat.isTamed()
+                        && cat.getOwner() != null
+                        && ownerUUID.equals(cat.getOwner().getUuid())
+                        && cat.getHealth() < cat.getMaxHealth());
     }
 }

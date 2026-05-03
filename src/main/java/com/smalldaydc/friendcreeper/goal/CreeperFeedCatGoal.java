@@ -1,6 +1,7 @@
 package com.smalldaydc.friendcreeper.goal;
 
 import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendlyCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponent;
@@ -15,14 +16,8 @@ import net.minecraft.util.math.Box;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.UUID;
 
 public class CreeperFeedCatGoal extends Goal {
-
-    private static final double SEARCH_RANGE = 16.0;
-    private static final double MOVE_SPEED = 1.0;
-    private static final double FEED_REACH_XZ = 1.5;
-    private static final double FEED_REACH_Y = 0.5;
 
     private final CreeperEntity creeper;
     private CatEntity targetCat;
@@ -45,7 +40,7 @@ public class CreeperFeedCatGoal extends Goal {
         if (tc.friendcreeper$getHeldFish().isEmpty()) return false;
         if (!FriendlyCreeperConfig.get().feedOwnerCat) return false;
         if (FriendlyCreeperConfig.get().afraidOfCats) return false;
-        if (creeper.getHealth() / creeper.getMaxHealth() < 0.25f) return false;
+        if (creeper.getHealth() / creeper.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD) return false;
         if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
@@ -78,11 +73,12 @@ public class CreeperFeedCatGoal extends Goal {
 
         if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isIdle()) {
             this.updateCountdownTicks = this.getTickCount(10);
-            creeper.getNavigation().startMovingTo(targetCat, MOVE_SPEED);
+            creeper.getNavigation().startMovingTo(targetCat, FriendlyCreeperMod.INTERACTION_MOVE_SPEED);
         }
 
         // Bounding box overlap check for feeding
-        Box feedBox = creeper.getBoundingBox().expand(FEED_REACH_XZ, FEED_REACH_Y, FEED_REACH_XZ);
+        Box feedBox = creeper.getBoundingBox().expand(
+                FriendlyCreeperMod.INTERACTION_REACH_XZ, FriendlyCreeperMod.INTERACTION_REACH_Y, FriendlyCreeperMod.INTERACTION_REACH_XZ);
         if (feedBox.intersects(targetCat.getBoundingBox())) {
             feedCat();
         }
@@ -114,17 +110,7 @@ public class CreeperFeedCatGoal extends Goal {
     }
 
     private CatEntity findHungryOwnerCat() {
-        UUID ownerUUID = asTamed().friendcreeper$getOwnerUUID();
-        if (ownerUUID == null) return null;
-
-        Box searchBox = creeper.getBoundingBox().expand(SEARCH_RANGE);
-        List<CatEntity> cats = creeper.getEntityWorld().getEntitiesByClass(
-                CatEntity.class, searchBox,
-                cat -> cat.isAlive()
-                        && cat.isTamed()
-                        && cat.getOwner() != null
-                        && ownerUUID.equals(cat.getOwner().getUuid())
-                        && cat.getHealth() < cat.getMaxHealth());
+        List<CatEntity> cats = FriendlyCreeperMod.findHurtOwnerCats(creeper, FriendlyCreeperMod.CAT_SEARCH_RANGE);
 
         CatEntity nearest = null;
         double nearestDistSq = Double.MAX_VALUE;

@@ -1,30 +1,21 @@
 package com.smalldaydc.friendcreeper.goal;
 
 import com.smalldaydc.friendcreeper.FriendlyCreeperConfig;
+import com.smalldaydc.friendcreeper.FriendlyCreeperMod;
 import com.smalldaydc.friendcreeper.ITamedCreeper;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Box;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.UUID;
 
 public class CreeperPickupFishGoal extends Goal {
 
-    private static final double SEARCH_RANGE = 10.0;
-    private static final double CAT_SEARCH_RANGE = 16.0;
-    private static final double MOVE_SPEED = 1.0;
-    /**
-     * Pickup reach: slightly larger than vanilla Vec3i(1,0,1) to reliably
-     * cover the gap between navigation stop position and item position.
-     */
-    private static final double PICKUP_REACH_XZ = 1.5;
-    private static final double PICKUP_REACH_Y = 0.5;
+    private static final double FISH_SEARCH_RANGE = 10.0;
 
     private final CreeperEntity creeper;
     private ItemEntity targetFish;
@@ -47,12 +38,12 @@ public class CreeperPickupFishGoal extends Goal {
         if (!tc.friendcreeper$getHeldFish().isEmpty()) return false;
         if (!FriendlyCreeperConfig.get().feedOwnerCat) return false;
         if (FriendlyCreeperConfig.get().afraidOfCats) return false;
-        if (creeper.getHealth() / creeper.getMaxHealth() < 0.25f) return false;
+        if (creeper.getHealth() / creeper.getMaxHealth() < FriendlyCreeperMod.LOW_HEALTH_THRESHOLD) return false;
         if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
         // Only pick up fish when there is a nearby hurt cat belonging to the same owner
-        if (!hasHurtOwnerCat()) return false;
+        if (FriendlyCreeperMod.findHurtOwnerCats(creeper, FriendlyCreeperMod.CAT_SEARCH_RANGE).isEmpty()) return false;
 
         targetFish = findNearestReachableFish();
         return targetFish != null;
@@ -81,7 +72,7 @@ public class CreeperPickupFishGoal extends Goal {
 
         if (--this.updateCountdownTicks <= 0 || creeper.getNavigation().isIdle()) {
             this.updateCountdownTicks = this.getTickCount(10);
-            boolean pathFound = creeper.getNavigation().startMovingTo(targetFish, MOVE_SPEED);
+            boolean pathFound = creeper.getNavigation().startMovingTo(targetFish, FriendlyCreeperMod.INTERACTION_MOVE_SPEED);
             if (!pathFound) {
                 // Path became invalid mid-travel, give up immediately
                 targetFish = null;
@@ -90,7 +81,8 @@ public class CreeperPickupFishGoal extends Goal {
         }
 
         // Vanilla-style pickup: bounding box overlap with pickup reach expansion
-        Box pickupBox = creeper.getBoundingBox().expand(PICKUP_REACH_XZ, PICKUP_REACH_Y, PICKUP_REACH_XZ);
+        Box pickupBox = creeper.getBoundingBox().expand(
+                FriendlyCreeperMod.INTERACTION_REACH_XZ, FriendlyCreeperMod.INTERACTION_REACH_Y, FriendlyCreeperMod.INTERACTION_REACH_XZ);
         if (pickupBox.intersects(targetFish.getBoundingBox())) {
             asTamed().friendcreeper$setHeldFish(targetFish.getStack().copyWithCount(1));
             if (targetFish.getStack().getCount() <= 1) {
@@ -109,23 +101,8 @@ public class CreeperPickupFishGoal extends Goal {
         creeper.getNavigation().stop();
     }
 
-    private boolean hasHurtOwnerCat() {
-        UUID ownerUUID = asTamed().friendcreeper$getOwnerUUID();
-        if (ownerUUID == null) return false;
-
-        Box searchBox = creeper.getBoundingBox().expand(CAT_SEARCH_RANGE);
-        List<CatEntity> cats = creeper.getEntityWorld().getEntitiesByClass(
-                CatEntity.class, searchBox,
-                cat -> cat.isAlive()
-                        && cat.isTamed()
-                        && cat.getOwner() != null
-                        && ownerUUID.equals(cat.getOwner().getUuid())
-                        && cat.getHealth() < cat.getMaxHealth());
-        return !cats.isEmpty();
-    }
-
     private ItemEntity findNearestReachableFish() {
-        Box searchBox = creeper.getBoundingBox().expand(SEARCH_RANGE);
+        Box searchBox = creeper.getBoundingBox().expand(FISH_SEARCH_RANGE);
         List<ItemEntity> items = creeper.getEntityWorld().getEntitiesByClass(
                 ItemEntity.class, searchBox,
                 item -> item.isAlive()
