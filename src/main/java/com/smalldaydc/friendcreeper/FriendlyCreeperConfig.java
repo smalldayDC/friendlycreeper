@@ -54,7 +54,7 @@ public class FriendlyCreeperConfig {
     /** Whether tamed Creepers show a wither rose instead of a poppy when at low health. Requires renderPoppy. Client-side only. Default: true */
     public boolean witherRoseOnLowHealth = true;
 
-    /** Whether tamed Creepers pick up fish and feed the owner's cats. Requires afraidOfCats to be disabled. Default: true */
+    /** Whether tamed Creepers pick up fish and feed the owner's cats. Requires afraidOfCats to be disabled. Default: false */
     public boolean feedOwnerCat = false;
 
     public static FriendlyCreeperConfig get() {
