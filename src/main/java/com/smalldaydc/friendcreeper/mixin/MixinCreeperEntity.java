@@ -214,6 +214,14 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
 
     // ── Tick ─────────────────────────────────────────────────────────────────
 
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void friendcreeper$preTick(CallbackInfo ci) {
+        // Force-stop fuse before CreeperEntity.tick() processes it
+        if (friendcreeper$isTamed() && friendcreeper$isSitting() && getFuseSpeed() > 0) {
+            setFuseSpeed(-1);
+        }
+    }
+
     @Inject(method = "tick", at = @At("TAIL"))
     private void friendcreeper$onTick(CallbackInfo ci) {
         // Client-side: handle hurt sound
