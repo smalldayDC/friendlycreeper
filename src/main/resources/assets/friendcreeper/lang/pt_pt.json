@@ -23,7 +23,7 @@
   "config.friendcreeper.naturalRegeneration": "Regeneração natural",
   "config.friendcreeper.naturalRegeneration.tooltip": "Se os Creepers domesticados regeneram vida naturalmente ao longo do tempo.",
   "config.friendcreeper.feedOwnerCat": "Alimentar o gato do dono",
-  "config.friendcreeper.feedOwnerCat.tooltip": "Se os Creepers domesticados apanham peixe cru e alimentam o gato do dono.\nMedo de gatos deve estar desativado.",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Se os Creepers domesticados apanham peixe cru e alimentam os gatos feridos do dono.\nMedo de gatos deve estar desativado.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa do Wither com pouca vida",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Se os Creepers domesticados mostram uma rosa do Wither em vez de uma papoila quando têm pouca vida.\nMostrar papoila deve estar ativado.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API não está instalada",

@@ -23,7 +23,7 @@
   "config.friendcreeper.naturalRegeneration": "Rigenerazione naturale",
   "config.friendcreeper.naturalRegeneration.tooltip": "Se i Creeper addomesticati rigenerano vita naturalmente nel tempo.",
   "config.friendcreeper.feedOwnerCat": "Nutrire il gatto del proprietario",
-  "config.friendcreeper.feedOwnerCat.tooltip": "Se i Creeper addomesticati raccolgono pesce crudo e nutrono il gatto del proprietario.\nPaura dei gatti deve essere disattivata.",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Se i Creeper addomesticati raccolgono pesce crudo e nutrono i gatti feriti del proprietario.\nPaura dei gatti deve essere disattivato.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rosa dell'appassimento con poca vita",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Se i Creeper addomesticati mostrano una rosa dell'appassimento al posto del papavero quando hanno poca vita.\nMostra papavero deve essere attivato.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API non è installata",

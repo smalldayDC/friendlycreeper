@@ -23,7 +23,7 @@
   "config.friendcreeper.naturalRegeneration": "Естественная регенерация",
   "config.friendcreeper.naturalRegeneration.tooltip": "Будет ли прирученный крипер естественно восстанавливать здоровье со временем.",
   "config.friendcreeper.feedOwnerCat": "Кормить кошку владельца",
-  "config.friendcreeper.feedOwnerCat.tooltip": "Будет ли прирученный крипер подбирать сырую рыбу и кормить кошку владельца.\nТребуется отключить боязнь кошек.",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Будет ли прирученный крипер подбирать сырую рыбу и кормить раненых кошек владельца.\nТребуется отключённый страх кошек.",
   "config.friendcreeper.witherRoseOnLowHealth": "Роза увядания при низком здоровье",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Будет ли прирученный крипер показывать розу увядания вместо мака при низком здоровье.\nТребуется включённое отображение мака.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API не установлен",

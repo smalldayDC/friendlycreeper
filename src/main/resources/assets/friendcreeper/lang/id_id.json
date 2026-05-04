@@ -23,7 +23,7 @@
   "config.friendcreeper.naturalRegeneration": "Regenerasi alami",
   "config.friendcreeper.naturalRegeneration.tooltip": "Apakah Creeper jinak akan memulihkan kesehatan secara alami seiring waktu.",
   "config.friendcreeper.feedOwnerCat": "Beri makan kucing pemilik",
-  "config.friendcreeper.feedOwnerCat.tooltip": "Apakah Creeper jinak akan mengambil ikan mentah dan memberi makan kucing pemilik.\nTakut kucing harus dinonaktifkan.",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Apakah Creeper jinak akan mengambil ikan mentah dan memberi makan kucing pemilik yang terluka.\nTakut kucing harus dinonaktifkan.",
   "config.friendcreeper.witherRoseOnLowHealth": "Mawar Wither saat kesehatan rendah",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Apakah Creeper jinak menampilkan mawar Wither alih-alih poppy saat kesehatannya rendah.\nTampilkan poppy harus diaktifkan.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API belum diinstal",

@@ -23,7 +23,7 @@
   "config.friendcreeper.naturalRegeneration": "Régénération naturelle",
   "config.friendcreeper.naturalRegeneration.tooltip": "Si les Creepers apprivoisés régénèrent naturellement leur vie au fil du temps.",
   "config.friendcreeper.feedOwnerCat": "Nourrir le chat du propriétaire",
-  "config.friendcreeper.feedOwnerCat.tooltip": "Si les Creepers apprivoisés ramassent du poisson cru et nourrissent le chat du propriétaire.\nPeur des chats doit être désactivée.",
+  "config.friendcreeper.feedOwnerCat.tooltip": "Si les Creepers apprivoisés ramassent du poisson cru et nourrissent les chats blessés du propriétaire.\nPeur des chats doit être désactivé.",
   "config.friendcreeper.witherRoseOnLowHealth": "Rose du Wither en basse vie",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "Si les Creepers apprivoisés affichent une rose du Wither au lieu d'un coquelicot lorsqu'ils ont peu de vie.\nAfficher le coquelicot doit être activé.",
   "screen.friendcreeper.noconfig.line1": "Cloth Config API n'est pas installé",

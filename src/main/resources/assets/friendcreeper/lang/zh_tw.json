@@ -23,7 +23,7 @@
   "config.friendcreeper.naturalRegeneration": "自然恢復",
   "config.friendcreeper.naturalRegeneration.tooltip": "馴服的苦力怕是否會隨時間自然恢復生命值。",
   "config.friendcreeper.feedOwnerCat": "餵食主人的貓",
-  "config.friendcreeper.feedOwnerCat.tooltip": "馴服的苦力怕是否會撿起生魚並餵食主人的貓。\n需要關閉害怕貓選項。",
+  "config.friendcreeper.feedOwnerCat.tooltip": "馴服的苦力怕是否會拾取生魚並餵食主人受傷的貓。\n需要關閉害怕貓。",
   "config.friendcreeper.witherRoseOnLowHealth": "低血量時顯示凋零玫瑰",
   "config.friendcreeper.witherRoseOnLowHealth.tooltip": "馴服的苦力怕在低血量時是否將罌粟替換為凋零玫瑰。\n需要開啟渲染罌粟。",
   "screen.friendcreeper.noconfig.line1": "未安裝 Cloth Config API",
