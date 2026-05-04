@@ -97,6 +97,9 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         this.setPose(nowSitting ? EntityPose.CROUCHING : EntityPose.STANDING);
         this.getNavigation().stop();
         setFuseSpeed(-1);
+        if (nowSitting) {
+            FriendCreeperMod.dropHeldFish((CreeperEntity) (Object) this);
+        }
     }
 
     @Override public @Nullable UUID friendcreeper$getOwnerUUID() {
