@@ -41,16 +41,8 @@ public class MixinMobEntity {
         if (tc.friendcreeper$isTamed()) {
             // Only handle main hand for tamed interactions to avoid double-firing
             if (hand != Hand.MAIN_HAND) return;
-            if (!player.getUuid().equals(tc.friendcreeper$getOwnerUUID())) return;
 
-            // Sneak+right-click → toggle sit (not while in vehicle)
-            if (player.isSneaking()) {
-                if (!creeper.hasVehicle() && !player.getEntityWorld().isClient()) tc.friendcreeper$toggleSit();
-                cir.setReturnValue(ActionResult.SUCCESS);
-                return;
-            }
-
-            // Gunpowder when hurt → heal
+            // Gunpowder when hurt → heal (any player, like vanilla wolves)
             if (stack.isOf(Items.GUNPOWDER) && creeper.getHealth() < creeper.getMaxHealth()) {
                 if (!player.getEntityWorld().isClient()) {
                     if (!player.getAbilities().creativeMode) stack.decrement(1);
@@ -61,6 +53,16 @@ public class MixinMobEntity {
                                 5, 0.4, 0.4, 0.4, 0.05);
                     }
                 }
+                cir.setReturnValue(ActionResult.SUCCESS);
+                return;
+            }
+
+            // Non-owner cannot do other interactions (sit/toggle)
+            if (!player.getUuid().equals(tc.friendcreeper$getOwnerUUID())) return;
+
+            // Sneak+right-click → toggle sit (not while in vehicle)
+            if (player.isSneaking()) {
+                if (!creeper.hasVehicle() && !player.getEntityWorld().isClient()) tc.friendcreeper$toggleSit();
                 cir.setReturnValue(ActionResult.SUCCESS);
                 return;
             }
