@@ -40,7 +40,6 @@ public class CreeperFeedCatGoal extends Goal {
         if (!FriendCreeperConfig.get().feedOwnerCat) return false;
         if (FriendCreeperConfig.get().afraidOfCats) return false;
         if (creeper.getHealth() / creeper.getMaxHealth() < FriendCreeperMod.LOW_HEALTH_THRESHOLD) return false;
-        if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
         targetCat = FriendCreeperMod.findNearestReachableHurtOwnerCat(creeper);

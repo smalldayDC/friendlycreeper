@@ -37,7 +37,6 @@ public class CreeperFollowOwnerGoal extends Goal {
         if (!asTamed().friendcreeper$isTamed()) return false;
         if (asTamed().friendcreeper$isSitting()) return false;
         if (!FriendCreeperConfig.get().followOwner) return false;
-        if (creeper.getEntityWorld().isClient()) return false;
         if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
 
         UUID ownerUUID = asTamed().friendcreeper$getOwnerUUID();

@@ -29,10 +29,8 @@ public class CreeperSuppressTargetGoal extends Goal {
         if (asTamed().friendcreeper$isTamed()) return true;
 
         // For untamed creepers: suppress when nearby player holds gunpowder
-        if (!creeper.getEntityWorld().isClient()) {
             PlayerEntity nearest = creeper.getEntityWorld().getClosestPlayer(creeper, 16.0);
             if (nearest != null && isHoldingGunpowder(nearest)) return true;
-        }
         return false;
     }
 
