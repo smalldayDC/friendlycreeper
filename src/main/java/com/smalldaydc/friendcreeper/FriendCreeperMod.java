@@ -31,7 +31,7 @@ public class FriendCreeperMod implements ModInitializer {
     /** Movement speed for pickup/feed goals. */
     public static final double INTERACTION_MOVE_SPEED = 1.0;
     /** Search range for finding owner's cats. */
-    public static final double CAT_SEARCH_RANGE = 16.0;
+    private static final double CAT_SEARCH_RANGE = 16.0;
 
     private static final double SEARCH_RADIUS = 64;
     private static final double SEARCH_HEIGHT = 32;
