@@ -30,7 +30,7 @@ public class MixinCreeperIgniteGoal {
         LivingEntity target = creeper.getTarget();
 
         // No valid target → never ignite (prevents explosion after target dies)
-        if (target == null || target.isDead()) {
+        if (target == null || !target.isAlive()) {
             cir.setReturnValue(false);
             return;
         }

@@ -40,7 +40,7 @@ public class CreeperFeedCatGoal extends Goal {
         if (!FriendCreeperConfig.get().feedOwnerCat) return false;
         if (FriendCreeperConfig.get().afraidOfCats) return false;
         if (creeper.getHealth() / creeper.getMaxHealth() < FriendCreeperMod.LOW_HEALTH_THRESHOLD) return false;
-        if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
+        if (creeper.getTarget() != null && creeper.getTarget().isAlive()) return false;
 
         targetCat = FriendCreeperMod.findNearestReachableHurtOwnerCat(creeper);
         return targetCat != null;
@@ -52,7 +52,7 @@ public class CreeperFeedCatGoal extends Goal {
         if (asTamed().friendcreeper$getHeldFish().isEmpty()) return false;
         if (!asTamed().friendcreeper$isTamed()) return false;
         if (asTamed().friendcreeper$isSitting()) return false;
-        if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
+        if (creeper.getTarget() != null && creeper.getTarget().isAlive()) return false;
         // Stop if cat is fully healed
         if (targetCat.getHealth() >= targetCat.getMaxHealth()) return false;
         return true;

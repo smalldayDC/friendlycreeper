@@ -51,7 +51,7 @@ public class FriendCreeperMod implements ModInitializer {
             // Non-player attacker → allow damage + trigger self-defense
             if (!(attacker instanceof PlayerEntity player)) {
                 if (attacker != null
-                        && (creeper.getTarget() == null || creeper.getTarget().isDead())
+                        && (creeper.getTarget() == null || !creeper.getTarget().isAlive())
                         && creeper.canSee(attacker)
                         && creeper.squaredDistanceTo(attacker) <= REVENGE_RANGE_SQ) {
                     dropHeldFish(creeper);

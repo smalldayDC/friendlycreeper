@@ -37,23 +37,23 @@ public class CreeperFollowOwnerGoal extends Goal {
         if (!asTamed().friendcreeper$isTamed()) return false;
         if (asTamed().friendcreeper$isSitting()) return false;
         if (!FriendCreeperConfig.get().followOwner) return false;
-        if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
+        if (creeper.getTarget() != null && creeper.getTarget().isAlive()) return false;
 
         UUID ownerUUID = asTamed().friendcreeper$getOwnerUUID();
         if (ownerUUID == null) return false;
 
         owner = creeper.getEntityWorld().getPlayerByUuid(ownerUUID);
-        if (owner == null || owner.isDead() || owner.isSpectator()) return false;
+        if (owner == null || !owner.isAlive() || owner.isSpectator()) return false;
 
         return creeper.squaredDistanceTo(owner) > START_SQ;
     }
 
     @Override
     public boolean shouldContinue() {
-        if (owner == null || owner.isDead() || owner.isSpectator()) return false;
+        if (owner == null || !owner.isAlive() || owner.isSpectator()) return false;
         if (!asTamed().friendcreeper$isTamed()) return false;
         if (!FriendCreeperConfig.get().followOwner) return false;
-        if (creeper.getTarget() != null && !creeper.getTarget().isDead()) return false;
+        if (creeper.getTarget() != null && creeper.getTarget().isAlive()) return false;
         // No progress for 5 consecutive recalculations → owner unreachable
         if (noProgressCount >= 5) return false;
         return creeper.squaredDistanceTo(owner) > STOP_SQ;

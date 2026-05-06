@@ -263,7 +263,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             }
 
             // Fallback: stop fuse if target is gone
-            if (getFuseSpeed() > 0 && (this.getTarget() == null || this.getTarget().isDead())) {
+            if (getFuseSpeed() > 0 && (this.getTarget() == null || !this.getTarget().isAlive())) {
                 setFuseSpeed(-1);
             }
             return;
@@ -278,11 +278,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
             this.getNavigation().stop();
         }
 
-        if (target != null && !target.isDead() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
+        if (target != null && target.isAlive() && this.squaredDistanceTo(target) > CHASE_RANGE_SQ) {
             this.setTarget(null);
         }
 
-        if ((target == null || target.isDead()) && getFuseSpeed() > 0) {
+        if ((target == null || !target.isAlive()) && getFuseSpeed() > 0) {
             setFuseSpeed(-1);
         }
 
@@ -309,7 +309,7 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         // Sync hasTarget to client for texture switching
-        boolean hasTarget = this.getTarget() != null && !this.getTarget().isDead();
+        boolean hasTarget = this.getTarget() != null && this.getTarget().isAlive();
         if (this.dataTracker.get(FRIENDCREEPER_HAS_TARGET) != hasTarget) {
             this.dataTracker.set(FRIENDCREEPER_HAS_TARGET, hasTarget);
         }
