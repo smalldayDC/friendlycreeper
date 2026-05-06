@@ -11,6 +11,7 @@ import com.smalldaydc.friendcreeper.goal.CreeperSuppressTargetGoal;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -175,6 +176,13 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         this.goalSelector.add(4, new CreeperFollowOwnerGoal(self));
         this.targetSelector.add(0, new CreeperSuppressTargetGoal(self));
 
+        // Replace vanilla ActiveTargetGoal with one that filters out gunpowder-holding players
+        this.targetSelector.clear(goal -> goal instanceof ActiveTargetGoal);
+        this.targetSelector.add(1, new ActiveTargetGoal<>(self, PlayerEntity.class, true,
+                (target, world) -> !(target instanceof PlayerEntity p
+                        && (p.getMainHandStack().isOf(Items.GUNPOWDER)
+                            || p.getOffHandStack().isOf(Items.GUNPOWDER)))));
+
         // Replace vanilla flee goals with conditional ones (respects afraidOfCats config)
         this.goalSelector.clear(goal -> goal instanceof FleeEntityGoal);
         this.goalSelector.add(3, new FleeEntityGoal<>(self, OcelotEntity.class, 6.0F, 1.0, 1.2) {
@@ -223,6 +231,15 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         if (friendcreeper$isTamed() && friendcreeper$isSitting() && getFuseSpeed() > 0) {
             setFuseSpeed(-1);
         }
+        // Force-stop fuse when untamed target picks up gunpowder
+        if (!friendcreeper$isTamed()
+                && this.getTarget() instanceof PlayerEntity player
+                && (player.getMainHandStack().isOf(Items.GUNPOWDER)
+                    || player.getOffHandStack().isOf(Items.GUNPOWDER))
+                && getFuseSpeed() > 0) {
+            this.setTarget(null);
+            setFuseSpeed(-1);
+        }
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -246,20 +263,11 @@ public abstract class MixinCreeperEntity extends HostileEntity implements ITamed
         }
 
         if (!friendcreeper$isTamed()) {
-            LivingEntity target = this.getTarget();
-            LivingEntity recentDamager = this.getAttacker();
-
-            // Retaliate against non-player attackers (bypasses goal system)
-            if (recentDamager != null && !(recentDamager instanceof PlayerEntity) && target == null) {
-                this.setTarget(recentDamager);
-            }
-
-            // Stop fuse and clear target if targeting a gunpowder-holding player
+            // Clear target if current target picked up gunpowder
             if (this.getTarget() instanceof PlayerEntity player
                     && (player.getMainHandStack().isOf(Items.GUNPOWDER)
                         || player.getOffHandStack().isOf(Items.GUNPOWDER))) {
                 this.setTarget(null);
-                setFuseSpeed(-1);
             }
 
             // Fallback: stop fuse if target is gone

@@ -23,11 +23,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinMobEntity {
 
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
-    private void friendcreeper$preventSnowGolemTargeting(LivingEntity target, CallbackInfo ci) {
-        if (!((Object) this instanceof SnowGolemEntity)) return;
-        if (FriendCreeperConfig.get().snowGolemAttack) return;
-        if (!(target instanceof CreeperEntity creeper)) return;
-        if (((ITamedCreeper)(Object) creeper).friendcreeper$isTamed()) ci.cancel();
+    private void friendcreeper$preventTargeting(LivingEntity target, CallbackInfo ci) {
+        // Prevent snow golems from targeting tamed creepers
+        if ((Object) this instanceof SnowGolemEntity && !FriendCreeperConfig.get().snowGolemAttack) {
+            if (target instanceof CreeperEntity creeper
+                    && ((ITamedCreeper)(Object) creeper).friendcreeper$isTamed()) {
+                ci.cancel();
+                return;
+            }
+        }
+
+        // Prevent untamed creepers from targeting gunpowder-holding players
+        if ((Object) this instanceof CreeperEntity creeper) {
+            ITamedCreeper tc = (ITamedCreeper)(Object) creeper;
+            if (!tc.friendcreeper$isTamed() && target instanceof PlayerEntity player
+                    && (player.getMainHandStack().isOf(Items.GUNPOWDER)
+                        || player.getOffHandStack().isOf(Items.GUNPOWDER))) {
+                ci.cancel();
+            }
+        }
     }
 
     @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)

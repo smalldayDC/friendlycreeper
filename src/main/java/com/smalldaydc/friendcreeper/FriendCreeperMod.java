@@ -45,23 +45,24 @@ public class FriendCreeperMod implements ModInitializer {
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if (!(entity instanceof CreeperEntity creeper)) return true;
             ITamedCreeper tc = (ITamedCreeper) creeper;
-            if (!tc.friendcreeper$isTamed()) return true;
             LivingEntity attacker = source.getAttacker() instanceof LivingEntity l ? l : null;
+            if (attacker == null) return true;
 
-            // Non-player attacker → allow damage + trigger self-defense
+            // Non-player attacker → allow damage + trigger self-defense (tamed and untamed)
             if (!(attacker instanceof PlayerEntity player)) {
-                if (attacker != null
-                        && (creeper.getTarget() == null || !creeper.getTarget().isAlive())
+                if ((creeper.getTarget() == null || !creeper.getTarget().isAlive())
                         && creeper.canSee(attacker)
                         && creeper.squaredDistanceTo(attacker) <= REVENGE_RANGE_SQ) {
-                    dropHeldFish(creeper);
+                    if (tc.friendcreeper$isTamed() && !tc.friendcreeper$isSitting()) {
+                        dropHeldFish(creeper);
+                    }
                     creeper.setTarget(attacker);
                 }
                 return true;
             }
 
-            // Owner damage protection
-            if (FriendCreeperConfig.get().allowOwnerDamage) return true;
+            // Owner damage protection (tamed only)
+            if (!tc.friendcreeper$isTamed() || FriendCreeperConfig.get().allowOwnerDamage) return true;
             UUID ownerUUID = tc.friendcreeper$getOwnerUUID();
             return ownerUUID == null || !ownerUUID.equals(player.getUuid());
         });
