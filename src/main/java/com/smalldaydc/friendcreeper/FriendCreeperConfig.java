@@ -16,11 +16,11 @@ public class FriendCreeperConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("FriendCreeper");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Path CONFIG_PATH = FabricLoader.getInstance()
-            .getConfigDir().resolve("friendcreeper.json");
+    private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("friendcreeper.json");
 
     private static FriendCreeperConfig instance;
 
+    // General
     /** Whether the owner can damage their own tamed Creeper. Default: false */
     public boolean allowOwnerDamage = false;
 
@@ -33,29 +33,30 @@ public class FriendCreeperConfig {
     /** Whether Snow Golems can target tamed Creepers. Default: false */
     public boolean snowGolemAttack = false;
 
-    /** Whether tamed Creepers play a hurt sound when at low health. Client-side only. Default: true */
-    public boolean hurtSound = true;
-
-    /** Whether to render the poppy on tamed Creepers' heads. Client-side only. Default: true */
-    public boolean renderPoppy = true;
-
-    /** Whether tamed Creepers use custom textures (happy/sad face). Client-side only. Default: true */
-    public boolean tamedCreeperTexture = true;
-
-    /** Whether tamed Creepers show a scared face when fleeing from cats. Client-side only. Default: true */
-    public boolean scaredFace = true;
-
     /** Whether tamed Creepers are afraid of cats and ocelots. Default: true */
     public boolean afraidOfCats = true;
 
     /** Whether tamed Creepers naturally regenerate health over time. Default: true */
     public boolean naturalRegeneration = true;
 
+    /** Whether tamed Creepers pick up fish and feed the owner's cats. Requires afraidOfCats to be disabled. Default: false */
+    public boolean feedOwnerCat = false;
+
+    // Client
+    /** Whether tamed Creepers play a hurt sound when at low health. Client-side only. Default: true */
+    public boolean hurtSound = true;
+
+    /** Whether to render the poppy on tamed Creepers' heads. Client-side only. Default: true */
+    public boolean renderPoppy = true;
+
     /** Whether tamed Creepers show a wither rose instead of a poppy when at low health. Requires renderPoppy. Client-side only. Default: true */
     public boolean witherRoseOnLowHealth = true;
 
-    /** Whether tamed Creepers pick up fish and feed the owner's cats. Requires afraidOfCats to be disabled. Default: false */
-    public boolean feedOwnerCat = false;
+    /** Whether tamed Creepers use custom textures (happy/sad face). Client-side only. Default: true */
+    public boolean tamedCreeperTexture = true;
+
+    /** Whether tamed Creepers show a scared face when fleeing from cats. Client-side only. Default: true */
+    public boolean scaredFace = true;
 
     public static FriendCreeperConfig get() {
         if (instance == null) load();
