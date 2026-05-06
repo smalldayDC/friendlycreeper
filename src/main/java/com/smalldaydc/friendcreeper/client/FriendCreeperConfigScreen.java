@@ -17,6 +17,7 @@ public class FriendCreeperConfigScreen {
 
     public static Screen create(Screen parent) {
         FriendCreeperConfig config = FriendCreeperConfig.get();
+        FriendCreeperConfig defaults = new FriendCreeperConfig();
 
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
@@ -28,20 +29,20 @@ public class FriendCreeperConfigScreen {
         ConfigCategory client = builder.getOrCreateCategory(Text.translatable("config.friendcreeper.category.client"));
 
         // General
-        addBooleanEntry(general, eb, "allowOwnerDamage", false, () -> config.allowOwnerDamage, v -> config.allowOwnerDamage = v);
-        addBooleanEntry(general, eb, "followOwner", true, () -> config.followOwner, v -> config.followOwner = v);
-        addBooleanEntry(general, eb, "revengeOwner", true, () -> config.revengeOwner, v -> config.revengeOwner = v);
-        addBooleanEntry(general, eb, "snowGolemAttack", false, () -> config.snowGolemAttack, v -> config.snowGolemAttack = v);
-        addBooleanEntry(general, eb, "afraidOfCats", true, () -> config.afraidOfCats, v -> config.afraidOfCats = v);
-        addBooleanEntry(general, eb, "naturalRegeneration", true, () -> config.naturalRegeneration, v -> config.naturalRegeneration = v);
-        addBooleanEntry(general, eb, "feedOwnerCat", false, () -> config.feedOwnerCat, v -> config.feedOwnerCat = v);
+        addBooleanEntry(general, eb, "allowOwnerDamage", defaults.allowOwnerDamage, () -> config.allowOwnerDamage, v -> config.allowOwnerDamage = v);
+        addBooleanEntry(general, eb, "followOwner", defaults.followOwner, () -> config.followOwner, v -> config.followOwner = v);
+        addBooleanEntry(general, eb, "revengeOwner", defaults.revengeOwner, () -> config.revengeOwner, v -> config.revengeOwner = v);
+        addBooleanEntry(general, eb, "snowGolemAttack", defaults.snowGolemAttack, () -> config.snowGolemAttack, v -> config.snowGolemAttack = v);
+        addBooleanEntry(general, eb, "afraidOfCats", defaults.afraidOfCats, () -> config.afraidOfCats, v -> config.afraidOfCats = v);
+        addBooleanEntry(general, eb, "naturalRegeneration", defaults.naturalRegeneration, () -> config.naturalRegeneration, v -> config.naturalRegeneration = v);
+        addBooleanEntry(general, eb, "feedOwnerCat", defaults.feedOwnerCat, () -> config.feedOwnerCat, v -> config.feedOwnerCat = v);
 
         // Client
-        addBooleanEntry(client, eb, "hurtSound", true, () -> config.hurtSound, v -> config.hurtSound = v);
-        addBooleanEntry(client, eb, "renderPoppy", true, () -> config.renderPoppy, v -> config.renderPoppy = v);
-        addBooleanEntry(client, eb, "witherRoseOnLowHealth", true, () -> config.witherRoseOnLowHealth, v -> config.witherRoseOnLowHealth = v);
-        addBooleanEntry(client, eb, "tamedCreeperTexture", true, () -> config.tamedCreeperTexture, v -> config.tamedCreeperTexture = v);
-        addBooleanEntry(client, eb, "scaredFace", true, () -> config.scaredFace, v -> config.scaredFace = v);
+        addBooleanEntry(client, eb, "hurtSound", defaults.hurtSound, () -> config.hurtSound, v -> config.hurtSound = v);
+        addBooleanEntry(client, eb, "renderPoppy", defaults.renderPoppy, () -> config.renderPoppy, v -> config.renderPoppy = v);
+        addBooleanEntry(client, eb, "witherRoseOnLowHealth", defaults.witherRoseOnLowHealth, () -> config.witherRoseOnLowHealth, v -> config.witherRoseOnLowHealth = v);
+        addBooleanEntry(client, eb, "tamedCreeperTexture", defaults.tamedCreeperTexture, () -> config.tamedCreeperTexture, v -> config.tamedCreeperTexture = v);
+        addBooleanEntry(client, eb, "scaredFace", defaults.scaredFace, () -> config.scaredFace, v -> config.scaredFace = v);
 
         return builder.build();
     }
