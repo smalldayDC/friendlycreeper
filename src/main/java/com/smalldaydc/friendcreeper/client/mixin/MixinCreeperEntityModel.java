@@ -25,7 +25,7 @@ public class MixinCreeperEntityModel {
 
         CreeperEntityModelAccessor acc = (CreeperEntityModelAccessor)(Object) this;
         ModelPart head       = acc.friendcreeper$getHead();
-        ModelPart body       = ((net.minecraft.client.model.Model)(Object) this).getRootPart().getChild("body");
+        ModelPart body       = ((net.minecraft.client.model.Model<?>)(Object) this).getRootPart().getChild("body");
         ModelPart leftFront  = acc.friendcreeper$getLeftFrontLeg();
         ModelPart rightFront = acc.friendcreeper$getRightFrontLeg();
         ModelPart leftHind   = acc.friendcreeper$getLeftHindLeg();
