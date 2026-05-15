@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.16-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom-remap' version '1.16-SNAPSHOT'
     id 'java'
 }
 
@@ -7,7 +7,6 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    maven { url = 'https://maven.fabricmc.net/' }
     maven { url = 'https://maven.shedaniel.me/' }
     maven { url = 'https://maven.terraformersmc.com/releases/' }
     exclusiveContent {
